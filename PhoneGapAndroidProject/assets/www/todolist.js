@@ -12,10 +12,9 @@ function todolistOpenDB()
 
 function todolistPopulateDB(tx)
 {
-    //tx.executeSql('DROP TABLE IF EXISTS DEMO');
     tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, data, dayOfWeek)');
     tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (1, "Demo entry", "Tuesday")');
-    //tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (1, "Another entry", null)');
+    tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (2, "Another entry", null)');
 }
 function onError(err)
 {
@@ -36,19 +35,19 @@ function todolistCreateDB()
 
 function todolistQuerySuccess(tx, results)
 {
-    // this will be empty since no rows were inserted.
-    //console.log("Insert ID = " + results.insertId);
-    // this will be 0 since it is a select statement
-    //console.log("Rows Affected = " + results.rowAffected);
-    // the number of rows returned by the select statement
     console.log("Num. Rows Returned = " + results.rows.length);
-    document.getElementById('todo-sql-result').innerHTML = 
-        "<strong>Rows Returned = " + results.rows.length +
-        ", ResultObject = " + results.rows.item(0) +
-        ", Id = " + results.rows.item(0).id +
-        ", data = " + results.rows.item(0).data +
-        ", DayOfWeek = " + results.rows.item(0).dayOfWeek +
-        "</strong>";
+    var resultString = "<strong>Rows Returned = " + results.rows.length;
+    for (var i = 0; i < results.rows.length; i++)
+    {
+    	resultString = resultString +
+    		" [ Row " + i +
+	        //", ResultObject = " + results.rows.item(i) +
+	        ", ID = " + results.rows.item(i).id +
+	        ", Data = " + results.rows.item(i).data +
+	        ", DayOfWeek = " + results.rows.item(i).dayOfWeek + " ]";
+    }
+    resultString = resultString + "</strong>"
+    document.getElementById('todo-sql-result').innerHTML = resultString;
 }
 
 function todolistQueryAllItems(tx)
