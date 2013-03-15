@@ -7,6 +7,9 @@
 
 	<link rel="stylesheet" href="index.css" /> 
 	<script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+
+	<!-- AL: Added reference to .js file for backlogic -->	
+	<script type="text/javascript" charset="utf-8" src="todolist.js"></script>
   </head>
   
   <body onload="init();">
@@ -288,10 +291,11 @@
 					<a class="btn deux" onclick="vibrate();" >Vibrate</a></div>  
 			</div>
 
+			<!-- AL: Adjusted for using our API functions -->	
 		    <div class="api-div" id="api-storage">
-				<h2>Storage</h2>
+				<h2>TODO-List Storage</h2>
 				<blockquote>
-  					<p>Provides access to the devices storage options.</p>
+  					<p>Playground for TODO-List device storage tests (over DB)...</p>
 				</blockquote>
 				<h4 class="help">Based on <b>W3C Web SQL Database Spec</b> and <b>W3C Web Storage API Spec</b></h4>							
 					<a class="btn" onclick="createDB();">Create DB</a>
@@ -305,6 +309,12 @@
 				<div class="result-block">
 					Local Storage: <span id="local-storage-result"></span><br/>
 				</div>
+				<!-- AL: test starts here -->
+					<h4>TODO-List playground starts here!</h4>
+					<a class="btn" onclick="todolistCreateDB();">Create DB</a>
+					<a class="btn" onclick="todolistGetSqlResultSet();">Get resultset</a>
+				<div class="result-block">
+					SQL Result: <br/><span id="todo-sql-result"></span><br/>
 			</div>	  
       </div>
     </div>	<!-- /scrollable -->
@@ -324,6 +334,6 @@
 	<script type="text/javascript" charset="utf-8" src="apis/geolocation.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/media.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/notification.js"></script>
-	<script type="text/javascript" charset="utf-8" src="apis/storage.js"></script>			
+	<script type="text/javascript" charset="utf-8" src="apis/storage.js"></script>
   </body>
 </html>
