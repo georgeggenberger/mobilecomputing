@@ -19,6 +19,10 @@
 	<div id="subheader">
             <select>
             	<option value="intro">PhoneGap API</option>
+				<option value="storage">Storage</option>
+				<option value="geolocation">Geolocation</option>
+				<option value="notification">Notification</option>
+				<option value="events">Events</option>
             	<option value="accelerometer">Accelerometer</option>
 				<option value="camera">Camera</option>
 				<option value="capture">Capture</option>
@@ -26,18 +30,18 @@
 				<option value="connection">Connection</option>
 				<option value="contacts">Contacts</option>
 				<option value="device">Device</option>
-				<option value="events">Events</option>
 				<option value="file">File</option>
-				<option value="geolocation">Geolocation</option>
 				<option value="media">Media</option>
-				<option value="notification">Notification</option>
-				<option value="storage">Storage</option>
 			</select>
     </div>
 	
 	<div id="sidebar">
 			<ul>
 				<li><a id="intro"><b>PhoneGap API</b></a></li>
+				<li><a id="storage">Storage</a></li>
+				<li><a id="geolocation">Geolocation</a></li>
+				<li><a id="notification">Notification</a></li>
+				<li><a id="events">Events</a></li>
 				<li><a id="accelerometer">Accelerometer</a></li>
 				<li><a id="camera">Camera</a></li>
 				<li><a id="capture">Capture</a></li>
@@ -45,12 +49,8 @@
  				<li><a id="connection">Connection</a></li>
 				<li><a id="contacts">Contacts</a></li>
 				<li><a id="device">Device</a></li>
-				<li><a id="events">Events</a></li>
 				<li><a id="file">File</a></li>
-				<li><a id="geolocation">Geolocation</a></li>
 				<li><a id="media">Media</a></li>
-				<li><a id="notification">Notification</a></li>
-				<li><a id="storage">Storage</a></li>
 			</ul>
 	</div><!-- /sidebar -->
 	<div id="scrollable">
@@ -297,6 +297,13 @@
 				<blockquote>
   					<p>Playground for TODO-List device storage tests (over DB)...</p>
 				</blockquote>
+				<!-- AL: TodoList API test starts here -->
+				<h4>TODO-List playground starts here!</h4>
+					<a class="btn" onclick="todolistCreateDB();">Create DB</a>
+					<a class="btn" onclick="todolistGetSqlResultSet();">Get resultset</a>
+				<div class="result-block">
+					SQL Result: <br/><span id="todo-sql-result"></span><br/>
+				<!-- AL: ...and ends here -->
 				<h4 class="help">Based on <b>W3C Web SQL Database Spec</b> and <b>W3C Web Storage API Spec</b></h4>							
 					<a class="btn" onclick="createDB();">Create DB</a>
 					<a class="btn" onclick="getSqlResultSet();">SQL Result Set</a>
@@ -309,12 +316,6 @@
 				<div class="result-block">
 					Local Storage: <span id="local-storage-result"></span><br/>
 				</div>
-				<!-- AL: test starts here -->
-					<h4>TODO-List playground starts here!</h4>
-					<a class="btn" onclick="todolistCreateDB();">Create DB</a>
-					<a class="btn" onclick="todolistGetSqlResultSet();">Get resultset</a>
-				<div class="result-block">
-					SQL Result: <br/><span id="todo-sql-result"></span><br/>
 			</div>	  
       </div>
     </div>	<!-- /scrollable -->
