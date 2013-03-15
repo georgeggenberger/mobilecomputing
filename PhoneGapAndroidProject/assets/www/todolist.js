@@ -15,6 +15,7 @@ function todolistPopulateDB(tx)
     //tx.executeSql('DROP TABLE IF EXISTS DEMO');
     tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, data, dayOfWeek)');
     tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (1, "Demo entry", "Tuesday")');
+    //tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (1, "Another entry", null)');
 }
 function onError(err)
 {
@@ -42,7 +43,12 @@ function todolistQuerySuccess(tx, results)
     // the number of rows returned by the select statement
     console.log("Num. Rows Returned = " + results.rows.length);
     document.getElementById('todo-sql-result').innerHTML = 
-        "<strong>Rows Returned = " + results.rows.length + ", Result = " + results.rows[0] + "</strong>";
+        "<strong>Rows Returned = " + results.rows.length +
+        ", ResultObject = " + results.rows.item(0) +
+        ", Id = " + results.rows.item(0).id +
+        ", data = " + results.rows.item(0).data +
+        ", DayOfWeek = " + results.rows.item(0).dayOfWeek +
+        "</strong>";
 }
 
 function todolistQueryAllItems(tx)
@@ -51,5 +57,6 @@ function todolistQueryAllItems(tx)
 }
 function todolistGetSqlResultSet()
 {
+    todolistOpenDB();
     db.transaction(todolistQueryAllItems, onError);    
 }
