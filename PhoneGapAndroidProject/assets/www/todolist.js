@@ -8,10 +8,11 @@
 // todolistPopulateDB:
 //		Adds 2 example entries to the database
 // todolistAddItemToDB:
-//		Adds an item to the DB with the arguments 'title', 'noteText', 'dayOfWeek' and 'location'
+//		Adds an item to the DB with the arguments 'title', 'noteText'
 //		All arguments are type of string, use empty string if no value given
 // todolistGetSqlResultSet:
 //		Loops through all items in the database and writes the result to the 'todo-sql-result' HTML element
+//
 
 var db = 0;
 function todolistOpenDB()
@@ -25,7 +26,7 @@ function todolistOpenDB()
 function onCreateDB(tx)
 {
 	// UTC timestamp is used for ID
-    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, title, noteText, dayOfWeek, location)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, title, noteText)');
 }
 function onDropDB(tx)
 {
@@ -33,8 +34,8 @@ function onDropDB(tx)
 }
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (' + new Date().getTime() + ', "Demo entry", "This is a demo text", "Tuesday", "")');
-    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (' + new Date().getTime() + ', "Another entry", "Test 1 2", "", "")');
+    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (' + new Date().getTime() + ', "Demo entry", "This is a demo text")');
+    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (' + new Date().getTime() + ', "Another entry", "Test 1 2")');
 }
 function onError(err)
 {
@@ -63,15 +64,25 @@ function todolistPopulateDB()
     db.transaction(onPopulateDB, onError, onSuccessManipulate);    
 }
 
-function todolistAddItemToDB(title, noteText, dayOfWeek, location)
+function todolistAddItemToDB(title, noteText)
 {
 	var onAddItem = function(tx)
 	{
-		tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (' + new Date().getTime() + ', "' + title + '", "' + noteText + '", "' + dayOfWeek + '", "' + location + '")');
+		tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (' + new Date().getTime() + ', "' + title + '", "' + noteText + '")');
 	};
 	
     todolistOpenDB();
     db.transaction(onAddItem, onError, onSuccessManipulate);    
+}
+function todolistDeleteItemFromDB(id)
+{
+	var onDeleteItem = function(tx)
+	{
+		tx.executeSql('DELETE * FROM TODOLIST WHERE id=' + id);
+	};
+	
+    todolistOpenDB();
+    db.transaction(onDeleteItem, onError, onSuccessManipulate);    
 }
 
 function onSuccessSelect(tx, results)
@@ -85,8 +96,7 @@ function onSuccessSelect(tx, results)
 	        //", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
 	        ", Title = " + results.rows.item(i).title +
-	        ", NoteText = " + results.rows.item(i).noteText +
-	        ", DayOfWeek = " + results.rows.item(i).dayOfWeek + " ]";
+	        ", NoteText = " + results.rows.item(i).noteText + " ]";
     }
     resultString = resultString + "</strong>"
     document.getElementById('todo-sql-result').innerHTML = resultString;
