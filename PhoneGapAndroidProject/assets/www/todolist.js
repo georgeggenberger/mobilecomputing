@@ -12,12 +12,16 @@ function todolistOpenDB()
 
 function onCreateDB(tx)
 {
-    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, data, dayOfWeek)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, title, noteText, dayOfWeek, location)');
+}
+function onDropDB(tx)
+{
+    tx.executeSql('DROP TABLE IF EXISTS TODOLIST');
 }
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (1, "Demo entry", "Tuesday")');
-    tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (2, "Another entry", null)');
+    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (1, "Demo entry", "This is a demo text", "Tuesday", null)');
+    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (2, "Another entry", "Test 1 2", null, null)');
 }
 function onError(err)
 {
@@ -35,6 +39,11 @@ function todolistCreateDB()
     todolistOpenDB();
     db.transaction(onCreateDB, onError, onSuccessCreate);    
 }
+function todolistDropDB()
+{
+    todolistOpenDB();
+    db.transaction(onDropDB, onError, onSuccessCreate);    
+}
 function todolistPopulateDB()
 {
     todolistOpenDB();
@@ -51,7 +60,8 @@ function onSuccessSelect(tx, results)
     		" [ Row " + i +
 	        //", ResultObject = " + results.rows.item(i) +
 	        ", ID = " + results.rows.item(i).id +
-	        ", Data = " + results.rows.item(i).data +
+	        ", Title = " + results.rows.item(i).title +
+	        ", NoteText = " + results.rows.item(i).noteText +
 	        ", DayOfWeek = " + results.rows.item(i).dayOfWeek + " ]";
     }
     resultString = resultString + "</strong>"
