@@ -10,9 +10,10 @@
 // todolistAddItemToDB:
 //		Adds an item to the DB with the arguments 'title', 'noteText'
 //		All arguments are type of string, use empty string if no value given
+// todolistDeleteItemFromDB:
+//		Deletes the item with the according 'id' from the DB
 // todolistGetSqlResultSet:
 //		Loops through all items in the database and writes the result to the 'todo-sql-result' HTML element
-//
 
 var db = 0;
 function todolistOpenDB()
@@ -34,7 +35,7 @@ function onDropDB(tx)
 }
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (' + new Date().getTime() + ', "Demo entry", "This is a demo text")');
+    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (1234, "Demo entry", "This is a demo text")');
     tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (' + new Date().getTime() + ', "Another entry", "Test 1 2")');
 }
 function onError(err)
@@ -78,7 +79,7 @@ function todolistDeleteItemFromDB(id)
 {
 	var onDeleteItem = function(tx)
 	{
-		tx.executeSql('DELETE * FROM TODOLIST WHERE id=' + id);
+		tx.executeSql('DELETE FROM TODOLIST WHERE id=' + id);
 	};
 	
     todolistOpenDB();
