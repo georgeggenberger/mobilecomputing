@@ -20,8 +20,8 @@ function onDropDB(tx)
 }
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (1, "Demo entry", "This is a demo text", "Tuesday", null)');
-    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (2, "Another entry", "Test 1 2", null, null)');
+    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (' + new Date().getTime() + ', "Demo entry", "This is a demo text", "Tuesday", null)');
+    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText, dayOfWeek, location) VALUES (' + new Date().getTime() + ', "Another entry", "Test 1 2", null, null)');
 }
 function onError(err)
 {
@@ -31,7 +31,7 @@ function onError(err)
 function onSuccessCreate()
 {
    console.log("Success creating DB");
-   document.getElementById('todo-sql-result').innerHTML = "<strong>Success creating Database 1.0</strong>";
+   document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
 function todolistCreateDB()
