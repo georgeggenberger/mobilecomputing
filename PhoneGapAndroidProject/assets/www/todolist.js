@@ -10,9 +10,12 @@ function todolistOpenDB()
     }
 }
 
-function todolistPopulateDB(tx)
+function onCreateDB(tx)
 {
     tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, data, dayOfWeek)');
+}
+function onPopulateDB(tx)
+{
     tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (1, "Demo entry", "Tuesday")');
     tx.executeSql('INSERT INTO TODOLIST (id, data, dayOfWeek) VALUES (2, "Another entry", null)');
 }
@@ -30,10 +33,15 @@ function onSuccessCreate()
 function todolistCreateDB()
 {
     todolistOpenDB();
-    db.transaction(todolistPopulateDB, onError, onSuccessCreate);    
+    db.transaction(onCreateDB, onError, onSuccessCreate);    
+}
+function todolistPopulateDB()
+{
+    todolistOpenDB();
+    db.transaction(onPopulateDB, onError, onSuccessCreate);    
 }
 
-function todolistQuerySuccess(tx, results)
+function onSuccessSelect(tx, results)
 {
     console.log("Num. Rows Returned = " + results.rows.length);
     var resultString = "<strong>Rows Returned = " + results.rows.length;
@@ -50,12 +58,12 @@ function todolistQuerySuccess(tx, results)
     document.getElementById('todo-sql-result').innerHTML = resultString;
 }
 
-function todolistQueryAllItems(tx)
+function onQueryAllItems(tx)
 {
-    tx.executeSql('SELECT * FROM TODOLIST', [], todolistQuerySuccess, onError);
+    tx.executeSql('SELECT * FROM TODOLIST', [], onSuccessSelect, onError);
 }
 function todolistGetSqlResultSet()
 {
     todolistOpenDB();
-    db.transaction(todolistQueryAllItems, onError);    
+    db.transaction(onQueryAllItems, onError);    
 }
