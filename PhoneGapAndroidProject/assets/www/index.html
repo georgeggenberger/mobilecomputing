@@ -23,15 +23,7 @@
 				<option value="geolocation">Geolocation</option>
 				<option value="notification">Notification</option>
 				<option value="events">Events</option>
-            	<option value="accelerometer">Accelerometer</option>
-				<option value="camera">Camera</option>
-				<option value="capture">Capture</option>
-				<option value="compass">Compass</option>
-				<option value="connection">Connection</option>
-				<option value="contacts">Contacts</option>
 				<option value="device">Device</option>
-				<option value="file">File</option>
-				<option value="media">Media</option>
 			</select>
     </div>
 	
@@ -42,15 +34,7 @@
 				<li><a id="geolocation">Geolocation</a></li>
 				<li><a id="notification">Notification</a></li>
 				<li><a id="events">Events</a></li>
-				<li><a id="accelerometer">Accelerometer</a></li>
-				<li><a id="camera">Camera</a></li>
-				<li><a id="capture">Capture</a></li>
-				<li><a id="compass">Compass</a></li>
- 				<li><a id="connection">Connection</a></li>
-				<li><a id="contacts">Contacts</a></li>
 				<li><a id="device">Device</a></li>
-				<li><a id="file">File</a></li>
-				<li><a id="media">Media</a></li>
 			</ul>
 	</div><!-- /sidebar -->
 	<div id="scrollable">
@@ -80,88 +64,8 @@
 				<h4>Select a <b>PhoneGap API </b>to see it demonstrated.</h4>
 				<h4 class="help">See <b>assets/www/apis/</b> for JavaScript implementations of each API.</h4>
 				
-				<p style="color:#767573;">&copy; 2012 Mobile Developer Solutions</p>
+				<p style="color:#767573;">&copy; 2013</p>
 				</div>		    					
-			</div>
-
-		    <div class="api-div" id="api-accelerometer">
-		         <h2>Accelerometer</h2>
-				<blockquote>
-  					<p>Captures device motion in the x, y, and z direction.</p>
-				</blockquote>
-				<h4 class="help"><b>Toggle</b> to stop/start
-				accelerometer watch.<br/><b>Get Current</b> for one-time accelerometer reading.</h4>
-				<a class="btn deux" onclick="toggleAccel();">Toggle</a>
-				<a class="btn deux" onclick="getAccel();">Get Current</a>
-    			<dl id="accel-data">
-      				<dt>X:</dt><dd id="x">&nbsp;&nbsp;&nbsp;</dd>
-      				<dt>Y:</dt><dd id="y">&nbsp;&nbsp;&nbsp;</dd>
-      				<dt>Z:</dt><dd id="z">&nbsp;&nbsp;&nbsp;</dd>
-   				 </dl>
-    			<div>Timestamp: <b id="accel_timestamp">0</b></div>
-			</div>
-
-		    <div class="api-div" id="api-camera">
-                <h2>Camera</h2>
-				<blockquote>
-  					<p>The <code>camera</code> object provides access to the device's default camera application.</p>
-				</blockquote>
-				<h4 class="help"><b>Take a Picture</b> using device camera.<br/>
-				<b>Select</b> to get picture from album or library.</h4>
-				<a class="btn deux" onclick="take_pic();">Take a Picture</a>
-				<a class="btn deux" onclick="album_pic();">Select</a>
-				<div class="result-block"></div>			
-      			<img id="cameraImage" src="" />
-			</div>
-
-		    <div class="api-div" id="api-capture">
-				<h2>Capture</h2>
-				<blockquote>
-					<p>Provides access to the audio, image, and video capture capabilities of the device.</p>
-				</blockquote>
-				<a class="btn trois" onclick="captureAudio();">Audio</a>
-				<a class="btn trois" onclick="captureImage();">Image</a>
-				<a class="btn trois" onclick="captureVideo();">Video</a>
-				<div class="result-block">
-				Capture Result: <span id="capture-result"></span><br/>
-				<span id="format-data"></span><br/>
-				</div>
-			</div>
-
-		    <div class="api-div" id="api-compass">
-				<h2>Compass</h2>
-				<blockquote>
-					<p>Obtains the direction that the device is pointing.</p>
-				</blockquote>
-				<h4 class="help"><b>Toggle</b> to stop/start
-				compass watch. <br/><b>Get Current</b> for one-time compass reading.</h4>
-				<div>
-     	 			Compass Heading: <b id="heading"></b>
-     	 		</div>
-				<a class="btn deux" onclick="toggleCompass();">Toggle</a>
-				<a class="btn deux" onclick="getCurrentHeading();">Get Current</a>
-    		</div>
-
-		    <div class="api-div" id="api-connection">
-				<h2>Connection</h2>
-				<blockquote>
-  					<p>The <code>connection</code> object gives access to the device's cellular and wifi connection information.</p>
-				</blockquote>
-   				<a class="btn" onclick="check_network();">Check Connection</a>
-   				<div class="result-block">
-   				Connection: <b id="connectionstate"></b>   
-   				</div>
-			</div>
-
-		    <div class="api-div" id="api-contacts">
-				<h2>Contacts</h2>
-				<blockquote>
-  					<p>The <code>contacts</code> object provides access to the device contacts database.</p>
-				</blockquote>
-   				<a class="btn" onclick="get_contacts();">Check Contacts</a>
-   				<div class="result-block">
-   					<span id="contacts-output"></span>
-   				</div>
 			</div>
 
 		    <div class="api-div" id="api-device">
@@ -232,26 +136,6 @@
 				<h4>Other event example callbacks use console.log</h4>								
 			</div>
 
-		    <div class="api-div" id="api-file">
-				<h2>File</h2>
-				<blockquote>
-					<p>An API to read, write and navigate file system hierarchies.</p>
-				</blockquote>
-				<div id="file-system-text"></div>
- 				<a class="btn deux" onclick="createFile();">Create</a>
- 				<a class="btn deux" onclick="writeFile();">Write</a>
-   				<div class="result-block">
-   					Status: <span id="file-status"></span>
-   					<span id="file-contents"></span>
-   				</div>
-   				<a class="btn deux" onclick="readFile();">Read</a>
- 				<a class="btn deux" onclick="removeFile();">Remove</a>
-   				<div class="result-block">
-   					Read text: <span id="file-read-text"></span><br/>
-   					Data Url: <span id="file-read-dataurl"></span>
-   				</div>
-			</div>
-
 		    <div class="api-div" id="api-geolocation">
 				<h2>Geolocation</h2>
 				<blockquote>
@@ -265,32 +149,6 @@
    					<span id="cur_position"></span>
    				</div>
    				<img id="map" alt="Location Map"/>								
-			</div>
-
-		    <div class="api-div" id="api-media">
-				<h2>Media</h2>
-				<blockquote>
-  					<p>The <code>Media</code> object provides the ability to record and play back audio files on a device. </p>
-				</blockquote>
-   				<div class="result-block">
-					<b>Play MP3 Song</b>
-				</div>
-				<a class="btn trois" onclick="playMyAudio();">Play</a>
-				<a class="btn trois" onclick="pauseAudio();">Pause</a>
-				<a class="btn trois" onclick="stopAudio();">Stop</a>	
-   				<div class="result-block">
-					Current: <span id="audio_position">0 sec</span>
-					&nbsp;&nbsp;Total: <span id=media_dur>0</span> sec
-				</div><br/>
-   				<div class="result-block">
-					<b>Live Audio Recording (5 sec)</b>
-				</div>
- 				<a class="btn deux" onclick="startRecord();">Record Audio</a>
- 				<a class="btn deux" onclick="playbackRecord()">Playback</a>
-   				<div class="result-block">
-   					Status: <span id="record-status"></span>
-   					<span id="record-time"></span>
-   				</div>
 			</div>
 
 		    <div class="api-div" id="api-notification">
@@ -327,20 +185,12 @@
       </div>
     </div>	<!-- /scrollable -->
 	<div id="footer" >
-		<h1>&copy; 2013 - Eggenberger, Topf, Liebmann</h1>
+		<h1>&copy; 2013 - Eggenberger, Topf, Liebmann, Lampl</h1>
 	</div>
 <!--  	<script type="text/javascript" charset="utf-8" src="index.js"></script> -->
-	<script type="text/javascript" charset="utf-8" src="apis/accelerometer.js"></script>
- 	<script type="text/javascript" charset="utf-8" src="apis/camera.js"></script>
- 	<script type="text/javascript" charset="utf-8" src="apis/capture.js"></script>
-	<script type="text/javascript" charset="utf-8" src="apis/compass.js"></script>
-	<script type="text/javascript" charset="utf-8" src="apis/connection.js"></script>
-	<script type="text/javascript" charset="utf-8" src="apis/contacts.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/device.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/events.js"></script>
- 	<script type="text/javascript" charset="utf-8" src="apis/file.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/geolocation.js"></script>
-	<script type="text/javascript" charset="utf-8" src="apis/media.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/notification.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/storage.js"></script>
   </body>
