@@ -56,6 +56,20 @@
 	<div id="scrollable">
         <div id="content">                
 		    <div class="api-div" id="api-intro">
+				<!-- AL: TodoList API test starts here -->
+		    	<h2>TODO-List</h2>
+				<blockquote>
+  					<p>API tests for TODO-List functionality (calls to Javascript).</p>
+				</blockquote>
+				<h4>TODO-List playground starts here!</h4>
+					<a class="btn" onclick="todolistCreateDB();">Create DB</a>
+					<a class="btn" onclick="todolistPopulateDB();">Add example entries to DB</a>
+					<a class="btn" onclick="todolistGetSqlResultSet();">Get resultset</a>
+				<div class="result-block">
+					SQL Result: <br/><span id="todo-sql-result"></span><br/>
+				</div>
+				<!-- AL: ...and ends here -->
+		    
 		         <h2>PhoneGap</h2>
 				<blockquote>
   					<p>An HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.</p>
@@ -291,19 +305,11 @@
 					<a class="btn deux" onclick="vibrate();" >Vibrate</a></div>  
 			</div>
 
-			<!-- AL: Adjusted for using our API functions -->	
 		    <div class="api-div" id="api-storage">
-				<h2>TODO-List Storage</h2>
+				<h2>Storage</h2>
 				<blockquote>
-  					<p>Playground for TODO-List device storage tests (over DB)...</p>
+  					<p>Access to storage (DB and local storage).</p>
 				</blockquote>
-				<!-- AL: TodoList API test starts here -->
-				<h4>TODO-List playground starts here!</h4>
-					<a class="btn" onclick="todolistCreateDB();">Create DB</a>
-					<a class="btn" onclick="todolistGetSqlResultSet();">Get resultset</a>
-				<div class="result-block">
-					SQL Result: <br/><span id="todo-sql-result"></span><br/>
-				<!-- AL: ...and ends here -->
 				<h4 class="help">Based on <b>W3C Web SQL Database Spec</b> and <b>W3C Web Storage API Spec</b></h4>							
 					<a class="btn" onclick="createDB();">Create DB</a>
 					<a class="btn" onclick="getSqlResultSet();">SQL Result Set</a>
@@ -320,7 +326,7 @@
       </div>
     </div>	<!-- /scrollable -->
 	<div id="footer" >
-		<h1>&copy; 2012 Mobile Developer Solutions</h1>
+		<h1>&copy; 2013 - Eggenberger, Topf, Liebmann</h1>
 	</div>
 <!--  	<script type="text/javascript" charset="utf-8" src="index.js"></script> -->
 	<script type="text/javascript" charset="utf-8" src="apis/accelerometer.js"></script>
