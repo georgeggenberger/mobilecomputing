@@ -7,9 +7,11 @@
 // 		Drops the database if already created
 // todolistPopulateDB:
 //		Adds 2 example entries to the database
-// todolistAddItemToDB:
+// todolistAddItemToDB(title, noteText):
 //		Adds an item to the DB with the arguments 'title', 'noteText'
 //		All arguments are type of string, use empty string if no value given
+// todolistModifyItemFromDB(id, newNoteText):
+// 		Modifies the note text from the item with the given id.
 // todolistDeleteItemFromDB:
 //		Deletes the item with the according 'id' from the DB
 // todolistGetSqlResultSet:
@@ -74,6 +76,16 @@ function todolistAddItemToDB(title, noteText)
 	
     todolistOpenDB();
     db.transaction(onAddItem, onError, onSuccessManipulate);    
+}
+function todolistModifyItemFromDB(id, newNoteText)
+{
+	var onModifyItem = function(tx)
+	{
+		tx.executeSql('UPDATE TODOLIST SET noteText="' + newNoteText + '" WHERE id=' + id);
+	};
+	
+	todolistOpenDB();
+    db.transaction(onModifyItem, onError, onSuccessManipulate);    
 }
 function todolistDeleteItemFromDB(id)
 {
