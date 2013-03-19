@@ -7,15 +7,19 @@
 // 		Drops the database if already created
 // todolistPopulateDB:
 //		Adds 2 example entries to the database
-// todolistAddItemToDB(title, noteText):
-//		Adds an item to the DB with the arguments 'title', 'noteText'
+// todolistAddItemToDB(notebook, title, noteText):
+//		Adds an item to the DB with the arguments 'notebook', 'title', 'noteText'
 //		All arguments are type of string, use empty string if no value given
 // todolistModifyItemFromDB(id, newNoteText):
 // 		Modifies the note text from the item with the given id.
 // todolistDeleteItemFromDB:
 //		Deletes the item with the according 'id' from the DB
-// todolistGetSqlResultSet:
+// todolistGetAllItems:
 //		Loops through all items in the database and writes the result to the 'todo-sql-result' HTML element
+// todolistGetAllNotebooks:
+//		Writes all available notebooks into the 'todo-sql-result' HTML element
+// todolistGetItemsForNotebook(notebook)
+//		Writes all items from given notebook into the 'todo-sql-result' HTML element
 
 var db = 0;
 function todolistOpenDB()
@@ -29,7 +33,7 @@ function todolistOpenDB()
 function onCreateDB(tx)
 {
 	// UTC timestamp is used for ID
-    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, title, noteText)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, notebook, title, noteText)');
 }
 function onDropDB(tx)
 {
@@ -37,8 +41,8 @@ function onDropDB(tx)
 }
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (1234, "Demo entry", "This is a demo text")');
-    tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (' + new Date().getTime() + ', "Another entry", "Test 1 2")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (1234, "List 1", "Demo entry", "This is a demo text")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "2nd List", "Another entry", "Test 1 2")');
 }
 function onError(err)
 {
@@ -67,11 +71,11 @@ function todolistPopulateDB()
     db.transaction(onPopulateDB, onError, onSuccessManipulate);    
 }
 
-function todolistAddItemToDB(title, noteText)
+function todolistAddItemToDB(notebook, title, noteText)
 {
 	var onAddItem = function(tx)
 	{
-		tx.executeSql('INSERT INTO TODOLIST (id, title, noteText) VALUES (' + new Date().getTime() + ', "' + title + '", "' + noteText + '")');
+		tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "' + notebook + '", "' + title + '", "' + noteText + '")');
 	};
 	
     todolistOpenDB();
@@ -108,6 +112,7 @@ function onSuccessSelect(tx, results)
     		" [ Row " + i +
 	        //", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
+	        ", Notebook = " + results.rows.item(i).notebook +
 	        ", Title = " + results.rows.item(i).title +
 	        ", NoteText = " + results.rows.item(i).noteText + " ]";
     }
@@ -115,12 +120,36 @@ function onSuccessSelect(tx, results)
     document.getElementById('todo-sql-result').innerHTML = resultString;
 }
 
-function onQueryAllItems(tx)
+function todolistGetAllItems()
 {
-    tx.executeSql('SELECT * FROM TODOLIST', [], onSuccessSelect, onError);
-}
-function todolistGetSqlResultSet()
-{
+	var onQueryAllItems = function(tx)
+	{
+	    tx.executeSql('SELECT * FROM TODOLIST', [], onSuccessSelect, onError);
+	}
+
     todolistOpenDB();
     db.transaction(onQueryAllItems, onError);    
 }
+
+function todolistGetAllNotebooks()
+{
+	var onQueryNotebooks = function(tx)
+	{
+	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST', [], onSuccessSelect, onError);
+	};
+
+    todolistOpenDB();
+    db.transaction(onQueryNotebooks, onError);    
+}
+
+function todolistGetItemsForNotebook(notebook)
+{
+	var onQueryItemsForNotebook = function(tx)
+	{
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelect, onError);
+	};
+
+    todolistOpenDB();
+    db.transaction(onQueryItemsForNotebook, onError);    
+}
+

@@ -49,10 +49,12 @@
 					<a class="btn" onclick="todolistCreateDB();">Create DB</a>
 					<a class="btn" onclick="todolistDropDB();">Drop DB</a>
 					<a class="btn" onclick="todolistPopulateDB();">Add example entries to DB</a>
-					<a class="btn" onclick="todolistAddItemToDB('The title', 'The Text');">Add entry to DB</a>
+					<a class="btn" onclick="todolistAddItemToDB('List 1', 'The title', 'The Text');">Add entry to DB</a>
 					<a class="btn" onclick="todolistModifyItemFromDB(1234, 'Another Text');">Modify DB entry</a>
 					<a class="btn" onclick="todolistDeleteItemFromDB(1234);">Delete entry from DB</a>
-					<a class="btn" onclick="todolistGetSqlResultSet();">Get resultset</a>
+					<a class="btn" onclick="todolistGetAllItems();">Get all items</a>
+					<a class="btn" onclick="todolistGetAllNotebooks();">Get all notebooks</a>
+					<a class="btn" onclick="todolistGetItemsForNotebook('List 1');">Get resultset for List 1</a>
 				<div class="result-block">
 					SQL Result: <br/><span id="todo-sql-result"></span><br/>
 				</div>
