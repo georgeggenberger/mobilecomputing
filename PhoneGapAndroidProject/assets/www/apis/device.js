@@ -32,6 +32,10 @@ function onBackbutton() {
         scroll(0,0);
     }
 }
+
+//global db connection variable
+var db = 0;
+
 var onDeviceReady = function() {
     console.log("deviceready event fired");
     // api-device
@@ -83,6 +87,21 @@ var onDeviceReady = function() {
             //console.log("window.orientation: " + window.orientation);
             updateScreen();
         }, false);
+    }
+    
+    //opening the db connection and creating the TODO-list table
+    if (!db)
+    {
+        db = window.openDatabase("Database", "1.0", "Yet another TODO-List", 500000);
+        
+        //creating table for TODO-Lists
+        todolistCreateDB();
+        
+        //only for testing purposes (is adding items on each start)
+        todolistPopulateDB();
+        
+        //initializes initial view of todo-items
+        todolistGetAllNotebooks();
     }
 };
 

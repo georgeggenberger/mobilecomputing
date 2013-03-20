@@ -21,6 +21,7 @@
 // todolistGetItemsForNotebook(notebook)
 //		Writes all items from given notebook into the 'todo-sql-result' HTML element
 
+/*
 var db = 0;
 function todolistOpenDB()
 {
@@ -28,46 +29,61 @@ function todolistOpenDB()
     {
         db = window.openDatabase("Database", "1.0", "Yet another TODO-List", 500000);
     }
-}
+} */
 
 function onCreateDB(tx)
 {
 	// UTC timestamp is used for ID
     tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, notebook, title, noteText)');
-}
+} 
+
+/*
 function onDropDB(tx)
 {
     tx.executeSql('DROP TABLE IF EXISTS TODOLIST');
-}
+} */
+
+//DEMO-FUNCTION
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (1234, "List 1", "Demo entry", "This is a demo text")');
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "2nd List", "Another entry", "Test 1 2")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "List 1", "Demo entry", "This is a demo text 1")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+1) + ', "List 1", "Another entry", "This is a demo text 2")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+2) + ', "List 2", "Yet Another entry", "This is a demo text 2")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+3) + ', "List 2", "Yet Another entry 2", "This is a demo text 3")');
 }
+
 function onError(err)
 {
    console.log("Error processing SQL statement: " + err.code);
    document.getElementById('todo-sql-result').innerHTML = "<strong>Error processing SQL statement: " + err.code + "</strong>";
 }
+
 function onSuccessManipulate()
 {
    console.log("Success creating DB");
    document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
+// -------------------------------------------------------------------------------------------------------------------
+// ACTION FUNCTIONS
 function todolistCreateDB()
 {
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onCreateDB, onError, onSuccessManipulate);    
-}
+} 
+
+/*
 function todolistDropDB()
 {
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onDropDB, onError, onSuccessManipulate);    
 }
+*/
+
+//DEMO-FUNCTION
 function todolistPopulateDB()
 {
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onPopulateDB, onError, onSuccessManipulate);    
 }
 
@@ -78,9 +94,10 @@ function todolistAddItemToDB(notebook, title, noteText)
 		tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "' + notebook + '", "' + title + '", "' + noteText + '")');
 	};
 	
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onAddItem, onError, onSuccessManipulate);    
 }
+
 function todolistModifyItemFromDB(id, newNoteText)
 {
 	var onModifyItem = function(tx)
@@ -88,9 +105,10 @@ function todolistModifyItemFromDB(id, newNoteText)
 		tx.executeSql('UPDATE TODOLIST SET noteText="' + newNoteText + '" WHERE id=' + id);
 	};
 	
-	todolistOpenDB();
+	//todolistOpenDB();
     db.transaction(onModifyItem, onError, onSuccessManipulate);    
 }
+
 function todolistDeleteItemFromDB(id)
 {
 	var onDeleteItem = function(tx)
@@ -98,14 +116,14 @@ function todolistDeleteItemFromDB(id)
 		tx.executeSql('DELETE FROM TODOLIST WHERE id=' + id);
 	};
 	
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onDeleteItem, onError, onSuccessManipulate);    
 }
 
 function onSuccessSelect(tx, results)
 {
     console.log("Num. Rows Returned = " + results.rows.length);
-    var resultString = "<strong>Rows Returned = " + results.rows.length;
+    var resultString = "<strong>Rows Returned = " + results.rows.length + "</strong><br/>";
     for (var i = 0; i < results.rows.length; i++)
     {
     	resultString = resultString +
@@ -114,10 +132,32 @@ function onSuccessSelect(tx, results)
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
 	        ", Notebook = " + results.rows.item(i).notebook +
 	        ", Title = " + results.rows.item(i).title +
-	        ", NoteText = " + results.rows.item(i).noteText + " ]";
+	        ", NoteText = " + results.rows.item(i).noteText + " ]<br/>";
     }
-    resultString = resultString + "</strong>"
     document.getElementById('todo-sql-result').innerHTML = resultString;
+}
+
+//creation of accordion items: http://jquerymobile.com/demos/1.2.1/docs/content/content-collapsible-set.html
+function onSuccessSelectLists(tx, results)
+{
+    console.log("Num. Rows Returned = " + results.rows.length);
+    var resultString = "";
+    
+    for (var i = 0; i < results.rows.length; i++)
+    {
+    	resultString = resultString +
+    		"<div data-role='collapsible'><h3>" + results.rows.item(i).notebook + "</h3>" +
+    		"<p>[ Row " + i +
+	        ", ResultObject = " + results.rows.item(i) +
+	        ", ID (Timestamp) = " + results.rows.item(i).id +
+	        ", Notebook = " + results.rows.item(i).notebook +
+	        ", Title = " + results.rows.item(i).title +
+	        ", NoteText = " + results.rows.item(i).noteText + " ]</p></div>";
+    }
+   
+    document.getElementById('view-block').innerHTML = resultString;
+    
+    $("div[data-role='collapsible-set']").collapsibleset('refresh');
 }
 
 function todolistGetAllItems()
@@ -127,7 +167,7 @@ function todolistGetAllItems()
 	    tx.executeSql('SELECT * FROM TODOLIST', [], onSuccessSelect, onError);
 	}
 
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onQueryAllItems, onError);    
 }
 
@@ -135,10 +175,10 @@ function todolistGetAllNotebooks()
 {
 	var onQueryNotebooks = function(tx)
 	{
-	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST', [], onSuccessSelect, onError);
+	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST', [], onSuccessSelectLists, onError);
 	};
 
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onQueryNotebooks, onError);    
 }
 
@@ -149,7 +189,7 @@ function todolistGetItemsForNotebook(notebook)
 	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelect, onError);
 	};
 
-    todolistOpenDB();
+    //todolistOpenDB();
     db.transaction(onQueryItemsForNotebook, onError);    
 }
 
