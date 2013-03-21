@@ -28,16 +28,16 @@ function onCreateDB(tx)
     tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, notebook, title, noteText)');
 } 
 
-/*
+//JUST FOR TESTING PURPOSES
 function onDropDB(tx)
 {
     tx.executeSql('DROP TABLE IF EXISTS TODOLIST');
 }
+
 function todolistDropDB()
 {
     db.transaction(onDropDB, onError, onSuccessManipulate);    
 }
-*/
 
 //DEMO-FUNCTION
 function onPopulateDB(tx)
@@ -46,6 +46,7 @@ function onPopulateDB(tx)
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+1) + ', "List 1", "Another entry", "This is a demo text 2")');
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+2) + ', "List 2", "Yet Another entry", "This is a demo text 2")');
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+3) + ', "List 2", "Yet Another entry 2", "This is a demo text 3")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+4) + ', "List 3", "Demo entry 2", "This is a demo text 4")');
 }
 
 function onError(err)
@@ -56,7 +57,7 @@ function onError(err)
 
 function onSuccessManipulate()
 {
-   console.log("Success creating DB");
+   console.log("Success manipulating DB");
    document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
@@ -127,28 +128,32 @@ function onSuccessSelectLists(tx, results)
     
     for (var i = 0; i < results.rows.length; i++)
     {
-    
-    	var resultString = 
-    		"<div data-role='collapsible'><h3 class='title'>" + results.rows.item(i).notebook + "</h3>" +
-    		"<p>[ Row " + i +
+    	 var resultString = 
+    		"<div id='" + results.rows.item(i).notebook + "' data-role='collapsible'><h3>" + 
+    		results.rows.item(i).notebook + "</h3>" +
+    		 "<p>[ Row " + i +
 	        ", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
 	        ", Notebook = " + results.rows.item(i).notebook +
 	        ", Title = " + results.rows.item(i).title +
-	        ", NoteText = " + results.rows.item(i).noteText + " ]</p></div>";
+	        ", NoteText = " + results.rows.item(i).noteText + " ]</p>" +
+    		"</div>"; 
     	
-    	$("div[data-role='collapsible-set']").append(resultString);
+    	$("div[data-role='collapsible-set']").append(resultString); 
     	
-    	//binding event to notebook item
+    	//binding event to notebook element
     	bindListEvent(results.rows.item(i).notebook);
     }
     
     $("div[data-role='collapsible-set']").collapsibleset('refresh');   
 }
 
+//Event-listener for expand
 function bindListEvent(notebook)
 {
-	$("div[data-role='collapsible']").last().bind('expand', function () {
+	//last() maybe not working every time
+	//$("div[data-role='collapsible']").last().
+	$("div[id='" + notebook + "']").bind('expand', function () {
 		
 		console.log("content = " + notebook);
 		

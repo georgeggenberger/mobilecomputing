@@ -94,6 +94,9 @@ var onDeviceReady = function() {
     {
         db = window.openDatabase("Database", "1.0", "Yet another TODO-List", 500000);
         
+        //only for testing purposes (whipes out old database)
+        todolistDropDB();
+        
         //creating table for TODO-Lists
         todolistCreateDB();
         
