@@ -124,23 +124,36 @@ function onSuccessSelect(tx, results)
 function onSuccessSelectLists(tx, results)
 {
     console.log("Num. Rows Returned = " + results.rows.length);
-    var resultString = "";
     
     for (var i = 0; i < results.rows.length; i++)
     {
-    	resultString = resultString +
-    		"<div data-role='collapsible'><h3>" + results.rows.item(i).notebook + "</h3>" +
+    
+    	var resultString = 
+    		"<div data-role='collapsible'><h3 class='title'>" + results.rows.item(i).notebook + "</h3>" +
     		"<p>[ Row " + i +
 	        ", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
 	        ", Notebook = " + results.rows.item(i).notebook +
 	        ", Title = " + results.rows.item(i).title +
 	        ", NoteText = " + results.rows.item(i).noteText + " ]</p></div>";
+    	
+    	$("div[data-role='collapsible-set']").append(resultString);
+    	
+    	//binding event to notebook item
+    	bindListEvent(results.rows.item(i).notebook);
     }
-   
-    document.getElementById('view-block').innerHTML = resultString;
     
-    $("div[data-role='collapsible-set']").collapsibleset('refresh');
+    $("div[data-role='collapsible-set']").collapsibleset('refresh');   
+}
+
+function bindListEvent(notebook)
+{
+	$("div[data-role='collapsible']").last().bind('expand', function () {
+		
+		console.log("content = " + notebook);
+		
+		todolistGetItemsForNotebook(notebook);
+	 });
 }
 
 function todolistGetAllItems()
