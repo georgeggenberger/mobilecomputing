@@ -98,22 +98,22 @@ function todolistAddItemToDB(notebook, title, noteText)
     db.transaction(onAddItem, onError, onSuccessManipulate);    
 }
 
-function todolistModifyItemFromDB(id, newNoteText)
+function todolistModifyItemFromDB(title, newNoteText)
 {
 	var onModifyItem = function(tx)
 	{
-		tx.executeSql('UPDATE TODOLIST SET noteText="' + newNoteText + '" WHERE id=' + id);
+		tx.executeSql('UPDATE TODOLIST SET noteText="' + newNoteText + '" WHERE title="' + title + '"');
 	};
 	
 	//todolistOpenDB();
     db.transaction(onModifyItem, onError, onSuccessManipulate);    
 }
 
-function todolistDeleteItemFromDB(id)
+function todolistDeleteItemFromDB(title)
 {
 	var onDeleteItem = function(tx)
 	{
-		tx.executeSql('DELETE FROM TODOLIST WHERE id=' + id);
+		tx.executeSql('DELETE FROM TODOLIST WHERE title="' + title + '"');
 	};
 	
     //todolistOpenDB();
