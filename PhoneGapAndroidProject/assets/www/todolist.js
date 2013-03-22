@@ -122,42 +122,70 @@ function onSuccessSelect(tx, results)
     document.getElementById('todo-sql-result').innerHTML = resultString;
 }
 
+//creating of accordion content of expanded item dynamically
+function onSuccessSelectItems(tx, results)
+{
+    console.log("Items - Num. Rows Returned = " + results.rows.length);
+    
+    $("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').empty();
+    
+    var resultString = "<p><strong>Rows Returned = " + results.rows.length + "</strong><br/>";
+    for (var i = 0; i < results.rows.length; i++)
+    {
+    	resultString += " [ Row " + i +
+	        //", ResultObject = " + results.rows.item(i) +
+	        ", ID (Timestamp) = " + results.rows.item(i).id +
+	        ", Notebook = " + results.rows.item(i).notebook +
+	        ", Title = " + results.rows.item(i).title +
+	        ", NoteText = " + results.rows.item(i).noteText + " ] <br/>";
+    }
+    resultString += "</p>";
+    
+    $("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').append(resultString);
+    
+    $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
+     
+}
+
 //creation of accordion items: http://jquerymobile.com/demos/1.2.1/docs/content/content-collapsible-set.html
 function onSuccessSelectLists(tx, results)
 {
-    console.log("Num. Rows Returned = " + results.rows.length);
+    console.log("Lists - Num. Rows Returned = " + results.rows.length);
     
     for (var i = 0; i < results.rows.length; i++)
     {
     	 var resultString = 
     		"<div id='" + results.rows.item(i).notebook + "' data-role='collapsible'><h3>" + 
-    		results.rows.item(i).notebook + "</h3>" +
-    		 "<p>[ Row " + i +
+    		results.rows.item(i).notebook + "</h3><p>" +
+    		/* "<p>[ Row " + i +
 	        ", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
 	        ", Notebook = " + results.rows.item(i).notebook +
 	        ", Title = " + results.rows.item(i).title +
-	        ", NoteText = " + results.rows.item(i).noteText + " ]</p>" +
-    		"</div>"; 
+	        ", NoteText = " + results.rows.item(i).noteText + " ]</p>" + */
+    		"</p></div>"; 
     	
     	$("div[data-role='collapsible-set']").append(resultString); 
     	
     	//binding event to notebook element
     	bindListEvent(results.rows.item(i).notebook);
+    	
     }
     
-    $("div[data-role='collapsible-set']").collapsibleset('refresh');   
+    $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
+    
 }
 
 //Event-listener for expand
 function bindListEvent(notebook)
 {
-	//last() maybe not working every time
-	//$("div[data-role='collapsible']").last().
+	
+	//BOTH EVENTS are working
 	$("div[id='" + notebook + "']").bind('expand', function () {
+	//$("div[id='" + notebook + "']").bind('tap taphold swipe swiperight swipeleft', function(event, ui) {
 		
-		console.log("content = " + notebook);
-		
+		console.log("Event Content = " + notebook);
+			
 		todolistGetItemsForNotebook(notebook);
 	 });
 }
@@ -186,7 +214,7 @@ function todolistGetItemsForNotebook(notebook)
 {
 	var onQueryItemsForNotebook = function(tx)
 	{
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelect, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
 	};
 
     db.transaction(onQueryItemsForNotebook, onError);    
