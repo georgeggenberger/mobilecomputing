@@ -9,7 +9,8 @@
     
     <!-- FL: Added default css for jquery mobile library -->
 	<link rel="stylesheet" href="jquery.mobile-1.3.0.min.css" />
-    
+	<link rel="stylesheet" href="todo.css" />
+	
     <!-- FL: Added reference to jquery mobile library -->
 	<script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="jquery.mobile-1.3.0.min.js"></script>
@@ -22,47 +23,22 @@
   
   <body onload="init();">
 	<div id="header" >
-		<h1><strong>MDS</strong> Phone<strong>Gap</strong> API Demo</h1>
+		<h1>TODO-List</h1>
 	</div>
-	<div id="subheader">
-            <select>
-            	<option value="intro">PhoneGap API</option>
-				<option value="storage">Storage</option>
-				<option value="geolocation">Geolocation</option>
-				<option value="notification">Notification</option>
-				<option value="events">Events</option>
-				<option value="device">Device</option>
-			</select>
-    </div>
-	
-	<div id="sidebar">
-			<ul>
-				<li><a id="intro"><b>PhoneGap API</b></a></li>
-				<li><a id="storage">Storage</a></li>
-				<li><a id="geolocation">Geolocation</a></li>
-				<li><a id="notification">Notification</a></li>
-				<li><a id="events">Events</a></li>
-				<li><a id="device">Device</a></li>
-			</ul>
-	</div><!-- /sidebar -->
 	<div id="scrollable">
         <div id="content">                
 		    <div class="api-div" id="api-intro">
 				<!-- AL: TodoList API test starts here -->
-		    	<h2>TODO-List</h2>
-				<blockquote>
-  					<p>API tests for TODO-List functionality (calls to Javascript).</p>
-				</blockquote>
-				<h4>TODO-List playground starts here!</h4>
+				<!-- <h4>TODO-List playground starts here!</h4> -->
 				<!--  <a data-role="button"  onclick="todolistCreateDB();">Create DB</a> 
 					<a data-role="button"  onclick="todolistDropDB();">Drop DB</a> -->	
-					<a data-role="button" onclick="todolistPopulateDB();">Add example entries to DB</a>
-					<a data-role="button" onclick="todolistAddItemToDB('List 1', 'Another entry', 'The Text');">Add entry to DB</a>
-					<a data-role="button" onclick="todolistModifyItemFromDB('Another entry', 'Modified Text');">Modify DB entry</a>
-					<a data-role="button" onclick="todolistDeleteItemFromDB('Another entry');">Delete entry from DB</a>
-					<a data-role="button" onclick="todolistGetAllItems();">Get all items</a>
-					<a data-role="button" onclick="todolistGetAllNotebooks();">Get all notebooks</a>
-					<a data-role="button" onclick="todolistGetItemsForNotebook('List 1');">Get resultset for List 1</a>
+					<a data-role="button" data-corners="false" onclick="todolistPopulateDB();">Add example entries to DB</a>
+					<a data-role="button" data-corners="false" onclick="todolistAddItemToDB('List 1', 'Another entry', 'The Text');">Add entry to DB</a>
+					<a data-role="button" data-corners="false" onclick="todolistModifyItemFromDB('Another entry', 'Modified Text');">Modify DB entry</a>
+					<a data-role="button" data-corners="false" onclick="todolistDeleteItemFromDB('Another entry');">Delete entry from DB</a>
+					<a data-role="button" data-corners="false" onclick="todolistGetAllItems();">Get all items</a>
+					<a data-role="button" data-corners="false" onclick="todolistGetAllNotebooks();">Get all notebooks</a>
+					<a data-role="button" data-icon="arrow-d" data-iconpos="right" data-corners="false" onclick="todolistGetItemsForNotebook('List 1');">Get resultset for List 1</a>
 				<div class="result-block">
 					SQL Result: <br/><span id="todo-sql-result"></span><br/>
 				</div>
