@@ -106,12 +106,16 @@ var onDeviceReady = function() {
         //initializes initial view of todo-items
         todolistGetAllNotebooks();
     }
+
 };
 
 function init() {
     document.addEventListener("deviceready", onDeviceReady, true);
 
     document.getElementById('api-intro').style.display = 'block';
+    
+    $("[data-role=header]").fixedtoolbar({ tapToggle: false });
+    $("[data-role=footer]").fixedtoolbar({ tapToggle: false });
     
  /*   var showApi = function(e) {
         var apiId = this.id;

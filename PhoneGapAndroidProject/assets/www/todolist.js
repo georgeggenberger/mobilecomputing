@@ -151,6 +151,8 @@ function onSuccessSelectLists(tx, results)
 {
     console.log("Lists - Num. Rows Returned = " + results.rows.length);
     
+    $("div[data-role='collapsible-set']").empty();
+    
     for (var i = 0; i < results.rows.length; i++)
     {
     	 var resultString = 
