@@ -14,6 +14,8 @@
 // 		Modifies the note text from the item with the given id.
 // todolistDeleteItemFromDB:
 //		Deletes the item with the according 'id' from the DB
+// todolistAddNotebook(notebook):
+//		Adds an empty notebook to the DB
 // todolistGetAllItems:
 //		Loops through all items in the database and writes the result to the 'todo-sql-result' HTML element
 // todolistGetAllNotebooks:
@@ -104,6 +106,16 @@ function todolistDeleteItemFromDB(title)
     db.transaction(onDeleteItem, onError, onSuccessManipulate);    
 }
 
+function todolistAddNotebook(notebook)
+{
+	var onAddNotebook = function(tx)
+	{
+		tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "' + notebook + '", null, null)');
+	};
+	
+	db.transaction(onAddNotebook, onError, onSuccessManipulate);
+}
+
 function onSuccessSelect(tx, results)
 {
     console.log("Num. Rows Returned = " + results.rows.length);
@@ -126,7 +138,13 @@ function onSuccessSelectItems(tx, results)
 {
     console.log("Items - Num. Rows Returned = " + results.rows.length);
     
-    $("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').empty();
+    if (results.rows.length == 0)
+    {
+    	// TODO handle empty resultset
+    	return;
+   	}
+
+	$("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').empty();
     
     var resultString = "<p><strong>Rows Returned = " + results.rows.length + "</strong><br/>";
     for (var i = 0; i < results.rows.length; i++)
@@ -143,7 +161,6 @@ function onSuccessSelectItems(tx, results)
     $("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').append(resultString);
     
     $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
-     
 }
 
 //creation of accordion items: http://jquerymobile.com/demos/1.2.1/docs/content/content-collapsible-set.html
@@ -193,7 +210,7 @@ function todolistGetAllItems()
 {
 	var onQueryAllItems = function(tx)
 	{
-	    tx.executeSql('SELECT * FROM TODOLIST', [], onSuccessSelect, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL', [], onSuccessSelect, onError);
 	}
 
     db.transaction(onQueryAllItems, onError);    
@@ -213,7 +230,7 @@ function todolistGetItemsForNotebook(notebook)
 {
 	var onQueryItemsForNotebook = function(tx)
 	{
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL AND notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
 	};
 
     db.transaction(onQueryItemsForNotebook, onError);    
