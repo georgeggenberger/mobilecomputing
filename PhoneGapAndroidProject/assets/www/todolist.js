@@ -138,17 +138,13 @@ function onSuccessSelectItems(tx, results)
 {
     console.log("Items - Num. Rows Returned = " + results.rows.length);
     
-    if (results.rows.length == 0)
-    {
-    	// TODO handle empty resultset
-    	return;
-   	}
-
 	$("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').empty();
     
     var resultString = "<p><strong>Rows Returned = " + results.rows.length + "</strong><br/>";
     for (var i = 0; i < results.rows.length; i++)
     {
+    	// Remark: if 'results.rows.item(i).title' is null, then it's a placeholder item for a notebook and could be ignored
+    	
     	resultString += " [ Row " + i +
 	        //", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
@@ -230,7 +226,8 @@ function todolistGetItemsForNotebook(notebook)
 {
 	var onQueryItemsForNotebook = function(tx)
 	{
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL AND notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
+	    //tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL AND notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
 	};
 
     db.transaction(onQueryItemsForNotebook, onError);    
