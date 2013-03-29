@@ -65,7 +65,6 @@ function onSuccessManipulate()
 // ACTION FUNCTIONS
 function todolistCreateDB()
 {
-    //todolistOpenDB();
     db.transaction(onCreateDB, onError, onSuccessManipulate);    
 } 
 

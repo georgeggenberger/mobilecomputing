@@ -61,7 +61,7 @@ h1,ul,li {
 }
 #scrollable {
 	/* position: fixed; */
-	padding: 20px 2% 0px 1%;
+	padding: 33px 1% 0px 1%;
 	float: right;
 	width: 72%;
 	overflow: auto;
@@ -91,10 +91,10 @@ h1,ul,li {
 #content h2 {
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 0.25em;
-	color: #e87a12;
+	color: #188F8F;
 	font-size: 1.4em;
 	font-weight: bold;
-	margin: 1.3em 0px 0.8em 0px;
+	margin: 0 0px 0.8em 0px;
 	text-shadow: #FFFFFF 0px 1px 1px;
 }
 code { 
@@ -191,7 +191,7 @@ a.btn.trois {
 }
 .result-block {
 	clear: both;
-	margin-top: 0.3em;
+	margin-top: 2.3em;
 }
 #accel-data {
 	margin-bottom: 15px;
@@ -294,7 +294,7 @@ dl > dd{
 	#content h2 {
 		padding-bottom: 0.4em;
 		font-size: 2em;
- 		margin-top: 2em;
+ 		
 	}
 	blockquote {
 		margin-top: 20px;
@@ -317,7 +317,7 @@ dl > dd{
 		margin: 1.5em auto;
 	}
 	#content {
-		margin: 30px 3% 0px;
+		margin: -1px 3% 0px;
 	}
 	#sidebar {
 		padding-top: 15px;
