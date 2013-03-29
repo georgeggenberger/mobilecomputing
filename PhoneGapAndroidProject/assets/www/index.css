@@ -24,7 +24,7 @@ h1,ul,li {
 }
 #subheader { display: none; }
 #footer {
-	display: none;
+/*	display: none; */
 	background-color: #515151;
 	background: #515151
 		-webkit-gradient(linear, left bottom, left top, color-stop(0.2, #515151),
@@ -61,9 +61,9 @@ h1,ul,li {
 }
 #scrollable {
 	/* position: fixed; */
-	padding: 33px 1% 0px 1%;
-	float: right;
-	width: 72%;
+	padding: 33px 1% 33px 1%;
+	/* float: right; */
+	width: auto;
 	overflow: auto;
 	top: 33px;
 }

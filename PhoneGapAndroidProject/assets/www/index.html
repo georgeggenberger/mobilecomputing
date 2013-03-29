@@ -9,7 +9,8 @@
     
     <!-- FL: added remote weinre javascript debugging support: 
     After start of app in emulator open this page in your host's browser: http://debug.phonegap.com/client/#mco-debugger -->
-    <script src="http://debug.phonegap.com/target/target-script-min.js#mco-debugger"></script>
+    <!--  <script src="http://debug.phonegap.com/target/target-script-min.js#mco-debugger"></script> -->
+    <script src="http://192.168.0.14/target/target-script-min.js#mco-debugger"></script>
     
     <!-- FL: Added default css for jquery mobile library -->
 	<link rel="stylesheet" href="jquery.mobile-1.3.0.min.css" />
@@ -49,26 +50,15 @@
 				</div>
 				<!-- AL: ...and ends here -->
 				
-				<!-- FT: TodoList UI test starts here -->
-		    	<h2>TODO-List</h2>
+				<!-- FT: TodoList UI test starts here 
+		    	<h2>TODO-List</h2> -->
 		    	<blockquote>
   					<p>UI tests for TODO-List functionality (DOM creation from Javascript).</p>
 				</blockquote>
 		    	<div id="view-block" data-role="collapsible-set" data-collapsed="true">
 				</div>
 		    	<!-- FT: ...and ends here -->
-		    
-		         <h2>PhoneGap</h2>
-				<blockquote>
-  					<p>An HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.</p>
-				</blockquote>
-
-				<div>
-				<h4>Select a <b>PhoneGap API </b>to see it demonstrated.</h4>
-				<h4 class="help">See <b>assets/www/apis/</b> for JavaScript implementations of each API.</h4>
-				
-				<p style="color:#767573;">&copy; 2013</p>
-				</div>		    					
+		    					
 			</div>
 
 		    <div class="api-div" id="api-device">

@@ -113,7 +113,7 @@ function init() {
 
     document.getElementById('api-intro').style.display = 'block';
     
-    var showApi = function(e) {
+ /*   var showApi = function(e) {
         var apiId = this.id;
         var divs = document.getElementsByClassName('api-div');   
         for(var j=0; j<divs.length; j++) { 
@@ -142,5 +142,5 @@ function init() {
             document.getElementById('api-' + api).style.display = 'block';
             
         }, false);
-    } else { alert("no select here"); }
+    } else { alert("no select here"); } */
 }
