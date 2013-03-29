@@ -110,6 +110,9 @@ function todolistAddNotebook(notebook)
 {
 	var onAddNotebook = function(tx)
 	{
+		// TODO we need to check if the name is already taken, we must not have same names here!
+		// either exiting here or after input validation
+		
 		tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "' + notebook + '", null, null)');
 	};
 	
