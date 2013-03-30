@@ -63,6 +63,12 @@ function onSuccessManipulate()
    document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
+//DEMO-FUNCTION
+function onSuccessConfirm(name)
+{
+	 document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
+} 
+
 // -------------------------------------------------------------------------------------------------------------------
 // ACTION FUNCTIONS
 function todolistCreateDB()

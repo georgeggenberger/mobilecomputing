@@ -10,3 +10,6 @@
 .ui-btn-up-c,
 .ui-btn-hover-c{border-width: 1px 1px 0 1px;}
 .ui-btn-inner{padding: 1.2em 20px;}
+
+/* removed close button in header of dialog */
+.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none; } 

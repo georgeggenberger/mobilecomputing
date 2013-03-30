@@ -40,17 +40,17 @@ var onDeviceReady = function() {
     console.log("deviceready event fired");
     // api-device
     // ***IMPORTANT: access device object only AFTER "deviceready" event    
-    document.getElementById("name").innerHTML = device.name;
-    document.getElementById("pgversion").innerHTML = device.cordova ? device.cordova : device.phonegap;
-    document.getElementById("platform").innerHTML = device.platform;
-    document.getElementById("uuid").innerHTML = device.uuid;
-    document.getElementById("version").innerHTML = device.version;
+//    document.getElementById("name").innerHTML = device.name;
+//    document.getElementById("pgversion").innerHTML = device.cordova ? device.cordova : device.phonegap;
+//    document.getElementById("platform").innerHTML = device.platform;
+//    document.getElementById("uuid").innerHTML = device.uuid;
+//    document.getElementById("version").innerHTML = device.version;
     // screen information  ***Not necessary to wait for deviceready event
-    document.getElementById("width").innerHTML = screen.width;
-    document.getElementById("height").innerHTML = screen.height;
-    document.getElementById("availwidth").innerHTML = screen.availWidth;
-    document.getElementById("availheight").innerHTML = screen.availHeight;
-    document.getElementById("colorDepth").innerHTML = screen.colorDepth;  
+//    document.getElementById("width").innerHTML = screen.width;
+//    document.getElementById("height").innerHTML = screen.height;
+//    document.getElementById("availwidth").innerHTML = screen.availWidth;
+//    document.getElementById("availheight").innerHTML = screen.availHeight;
+//    document.getElementById("colorDepth").innerHTML = screen.colorDepth;  
     
     // api-events - see events.js for handler implementations
     // ***IMPORTANT: add event listeners only AFTER "deviceready" event    
@@ -76,18 +76,18 @@ var onDeviceReady = function() {
     
     // The Samsung Galaxy Tab 10.1 is currently the only device known to
     // support orientation/change correctly and reliably.
-    if (device.name === "GT-P7510") {
-        var updateScreen = function() {
-            document.getElementById("width").innerHTML = screen.width;
-            document.getElementById("height").innerHTML = screen.height;
-            document.getElementById("availwidth").innerHTML = screen.availWidth;
-            document.getElementById("availheight").innerHTML = screen.availHeight;        
-        };         
-        window.addEventListener("orientationchange", function(e){
-            //console.log("window.orientation: " + window.orientation);
-            updateScreen();
-        }, false);
-    }
+//    if (device.name === "GT-P7510") {
+//        var updateScreen = function() {
+//            document.getElementById("width").innerHTML = screen.width;
+//            document.getElementById("height").innerHTML = screen.height;
+//            document.getElementById("availwidth").innerHTML = screen.availWidth;
+//            document.getElementById("availheight").innerHTML = screen.availHeight;        
+//        };         
+//        window.addEventListener("orientationchange", function(e){
+//            //console.log("window.orientation: " + window.orientation);
+//            updateScreen();
+//        }, false);
+//    }
     
     //opening the db connection and creating the TODO-list table
     if (!db)
@@ -106,7 +106,6 @@ var onDeviceReady = function() {
         //initializes initial view of todo-items
         todolistGetAllNotebooks();
     }
-
 };
 
 function init() {
@@ -116,6 +115,13 @@ function init() {
     
     $("[data-role=header]").fixedtoolbar({ tapToggle: false });
     $("[data-role=footer]").fixedtoolbar({ tapToggle: false });
+    
+    $("#add-item").click(function (e) {
+        e.stopImmediatePropagation();
+        //e.preventDefault();
+        //Do important stuff....
+        onSuccessConfirm($("#add-name").val());
+    });
     
  /*   var showApi = function(e) {
         var apiId = this.id;

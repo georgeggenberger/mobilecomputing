@@ -6,7 +6,7 @@
     <title></title>
 
     <link rel="stylesheet" href="index.css" /> 
-    
+   
     <!-- FL: added remote weinre javascript debugging support: 
     After start of app in emulator open this page in your host's browser: http://debug.phonegap.com/client/#mco-debugger -->
     <!--  <script src="http://debug.phonegap.com/target/target-script-min.js#mco-debugger"></script> -->
@@ -27,12 +27,13 @@
   </head>
   
   <body onload="init();">
+  <div data-role="page" id="main">
 	<div data-role="header" id="header" >
 		<h1>TODO-List</h1>
 	</div>
 	<div id="scrollable">
-     <div id="content">                
-		    <div class="api-div" id="api-intro"> 
+     <div id="content" data-role="content">                
+		   <div class="api-div" id="api-intro">
 				<!-- AL: TodoList API test starts here -->
 				<!-- <h4>TODO-List playground starts here!</h4> -->
 				<!--  <a data-role="button"  onclick="todolistCreateDB();">Create DB</a> 
@@ -47,8 +48,11 @@
 					<!--  <a data-role="button" data-icon="arrow-d" data-iconpos="right" data-corners="false" onclick="todolistGetItemsForNotebook('List 1');">Get resultset for List 1</a> -->
 					<a data-role="button" data-icon="arrow-d" data-iconpos="right" data-corners="false" onclick="todolistGetItemsForNotebook('List 1');">Get resultset for List 1</a>
 					<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" onclick="todolistAddNotebook('New List');">Add List</a>
+					<!--  FL: Dialog testing -->
+					<a data-role="button" data-corners="false" href="#add-dialog" data-rel="dialog" data-transition="pop">Open Dialog</a>
+
 				<div class="result-block">
-					SQL Result: <br/><span id="todo-sql-result"></span><br/>
+					<p>SQL Result: <br/><span id="todo-sql-result"></span></p>
 				</div>
 				<!-- AL: ...and ends here -->
 				
@@ -59,11 +63,10 @@
 				</blockquote>
 		    	<div id="view-block" data-role="collapsible-set" data-collapsed="true">
 				</div>
-		    	<!-- FT: ...and ends here -->
-		    					
+		    	<!-- FT: ...and ends here -->				
 			</div>
 
-		    <div class="api-div" id="api-device">
+		 <!-- <div class="api-div" id="api-device">
 				<h2>Device</h2>
 				<blockquote>
 					<p>The <code>device</code> object describes the device's hardware and software.</p>
@@ -119,7 +122,7 @@
     					<td class="alt"><strong id="colorDepth">&nbsp;</strong></td>
   					</tr> 					
 				</table>					
-			</div>
+			</div> -->
 
 		    <div class="api-div" id="api-events">
 				<h2>Events</h2>
@@ -159,7 +162,7 @@
 					<a data-role="button"  onclick="vibrate();" >Vibrate</a></div>  
 			</div>
 
-		    <div class="api-div" id="api-storage">
+<!-- 		    <div class="api-div" id="api-storage">
 				<h2>Storage</h2>
 				<blockquote>
   					<p>Access to storage (DB and local storage).</p>
@@ -176,14 +179,31 @@
 				<div class="result-block">
 					Local Storage: <span id="local-storage-result"></span><br/>
 				</div>
-			</div>	  
-      </div>
+			</div> -->
+      </div> <!-- /content -->
+      
     </div>	<!-- /scrollable -->
 	<div data-role="footer" id="footer" data-position="fixed">
 		<h1>&copy; 2013 - Eggenberger, Topf, Liebmann, Lampl</h1>
 	</div>
-	
-<!--  	<script type="text/javascript" charset="utf-8" src="index.js"></script> -->
+  </div> <!--  /page -->
+<!-- Dialog -->
+	<div data-role="dialog" id="add-dialog">
+		<div data-role="header" data-theme="c">
+			<h1>Enter a Notebook Name</h1>
+		</div>
+		<div data-role="content">	
+   			<p><input type="text" name="name" id="add-name" value=""  /></p>
+			<p><a data-role="button" data-rel="back" href="#main" id="add-item">OK</a></p>
+			<p><a data-role="button" data-rel="back" href="#main">CANCEL</a></p>
+		</div>
+	<!-- <div data-role="footer">
+			<h4>Click close button to go back to main page</h4>
+		</div> -->
+	</div>
+<!-- Dialog End -->
+
+	<!--  	<script type="text/javascript" charset="utf-8" src="index.js"></script> -->
 <!--  This inclusion is needed when we use the init() event! -->
 	<script type="text/javascript" charset="utf-8" src="apis/device.js"></script>
 	
