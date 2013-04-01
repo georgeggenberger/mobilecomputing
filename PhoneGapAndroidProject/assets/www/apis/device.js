@@ -18,6 +18,8 @@
  */
 
 function onBackbutton() {
+	console.log("onBackButton entered");
+	
     // the intro div is considered home, so exit if user
     // wants to go back with button from there
     if (document.getElementById('api-intro').style.display === 'block') {
@@ -95,21 +97,26 @@ var onDeviceReady = function() {
         db = window.openDatabase("Database", "1.0", "Yet another TODO-List", 500000);
         
         //only for testing purposes (whipes out old database)
+        console.log("init: drop old DB");
         todolistDropDB();
         
         //creating table for TODO-Lists
+        console.log("init: create DB");
         todolistCreateDB();
         
         //only for testing purposes (is adding items on each start)
+        console.log("init: populate DB");
         todolistPopulateDB();
         
         //initializes initial view of todo-items
+        console.log("init: get all notebooks");
         todolistGetAllNotebooks();
     }
     
 };
 
 function init() {
+    console.log("entered init");
     document.addEventListener("deviceready", onDeviceReady, true);
 
     document.getElementById('api-intro').style.display = 'block';
@@ -117,6 +124,7 @@ function init() {
     $("[data-role=header]").fixedtoolbar({ tapToggle: false });
     $("[data-role=footer]").fixedtoolbar({ tapToggle: false });
     
+    console.log("registering add-item click event");
     $("#add-item").click(function (e) {
         e.stopImmediatePropagation();
         

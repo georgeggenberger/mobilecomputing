@@ -3,14 +3,14 @@
 <html>
   <head>
     <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
-    <title></title>
+    <title>TODO-List App</title>
 
     <link rel="stylesheet" href="index.css" /> 
    
     <!-- FL: added remote weinre javascript debugging support: 
     After start of app in emulator open this page in your host's browser: http://debug.phonegap.com/client/#mco-debugger -->
     <!--  <script src="http://debug.phonegap.com/target/target-script-min.js#mco-debugger"></script> -->
-    <script src="http://192.168.0.14:8080/target/target-script-min.js#mco-debugger"></script>
+    <!-- <script src="http://192.168.0.14:8080/target/target-script-min.js#mco-debugger"></script> -->
     
     <!-- FL: Added default css for jquery mobile library -->
 	<link rel="stylesheet" href="jquery.mobile-1.3.0.min.css" />
@@ -66,64 +66,6 @@
 		    	<!-- FT: ...and ends here -->				
 			</div>
 
-		 <!-- <div class="api-div" id="api-device">
-				<h2>Device</h2>
-				<blockquote>
-					<p>The <code>device</code> object describes the device's hardware and software.</p>
-				</blockquote>
-				<h4><b>Important</b> Access <code>device</code> object only after <code>deviceready</code> event.</h4>
-       			<table id="deviceinfo">
-  					<tr>
-   					 	<th>Device</th>
-   					 	<th class="alt">Value</th>
-  					</tr>
-  					<tr>
-    					<td>Name</td>
-    					<td class="alt"><strong id="name">&nbsp;</strong></td>
-  					</tr>
-  					<tr>
-    					<td>Platform</td>
-   					 	<td class="alt"><strong id="platform">&nbsp;</strong></td>
-  					</tr>
-  					<tr>
-    					<td>PhoneGap Version</td>
-   					 	<td class="alt"><strong id="pgversion">&nbsp;</strong></td>
-  					</tr>
-  					<tr>
-    					<td>UUID</td>
-   					 	<td class="alt"><strong id="uuid">&nbsp;</strong></td>
-  					</tr>
-  					<tr>
-    					<td>OS Version</td>
-   					 	<td class="alt"><strong id="version">&nbsp;</strong></td>
-  					</tr>
-  					<tr>
-   					 	<th>Screen</th>
-   					 	<th class="alt">Value</th>
-  					</tr>
-  					<tr>
-    					<td>Width</td>
-    					<td class="alt"><strong id="width">&nbsp;</strong></td>
-  					</tr>
-   					<tr>
-    					<td>Height</td>
-    					<td class="alt"><strong id="height">&nbsp;</strong></td>
-  					</tr>
-   					<tr>
-    					<td>Available Width</td>
-    					<td class="alt"><strong id="availwidth">&nbsp;</strong></td>
-  					</tr>
-   					<tr>
-    					<td>Available Height</td>
-    					<td class="alt"><strong id="availheight">&nbsp;</strong></td>
-  					</tr>
-   					<tr>
-    					<td>Color Depth</td>
-    					<td class="alt"><strong id="colorDepth">&nbsp;</strong></td>
-  					</tr> 					
-				</table>					
-			</div> -->
-
 		    <div class="api-div" id="api-events">
 				<h2>Events</h2>
 				<blockquote>
@@ -161,25 +103,6 @@
 					<a data-role="button"  onclick="beep();" >Beep</a>
 					<a data-role="button"  onclick="vibrate();" >Vibrate</a></div>  
 			</div>
-
-<!-- 		    <div class="api-div" id="api-storage">
-				<h2>Storage</h2>
-				<blockquote>
-  					<p>Access to storage (DB and local storage).</p>
-				</blockquote>
-				<h4 class="help">Based on <b>W3C Web SQL Database Spec</b> and <b>W3C Web Storage API Spec</b></h4>							
-					<a data-role="button"  onclick="createDB();">Create DB</a>
-					<a data-role="button"  onclick="getSqlResultSet();">SQL Result Set</a>
-				<div class="result-block">
-					SQL Result: <br/><span id="sql-result"></span><br/>
-				</div><br/>				
-					<a data-role="button"  onclick="writeLocalStorage();">Write LocalStorage</a>
-					<a data-role="button"  onclick="readLocalStorage();">Read LocalStorage</a>
-					<a data-role="button"  onclick="removeItemLocalStorage();">Remove Item</a>
-				<div class="result-block">
-					Local Storage: <span id="local-storage-result"></span><br/>
-				</div>
-			</div> -->
       </div> <!-- /content -->
       
     </div>	<!-- /scrollable -->
@@ -190,16 +113,16 @@
   
 <!-- Dialog -->
 	<div data-role="dialog" id="add-dialog">
-		<div data-role="header" data-theme="c">
-			<h1>Enter a Notebook Name</h1>
+	  	<div data-role="header" id="header" >
+			<h1>Add new Notebook</h1>
 		</div>
 		<div data-role="content">	
-   			<p><input type="text" name="add-name" id="add-name" value="" />
+   			<p><input type="text" name="name" id="add-name" data-corners="false" value="" placeholder="Enter a Notebook Name" />
    			<!-- error label for validation -->
    			<label class='error'></label>
    			</p>
-			<p><a data-role="button" data-rel="back" href="#main" id="add-item">OK</a></p>
-			<p><a data-role="button" data-rel="back" href="#main">CANCEL</a></p>
+			<p><a data-role="button" data-corners="false" data-rel="back" data-theme="b" href="#main" id="add-item">OK</a></p>
+			<p><a data-role="button" data-corners="false" data-rel="back" href="#main">CANCEL</a></p>
 		</div>
 	<!-- <div data-role="footer">
 			<h4>Click close button to go back to main page</h4>
