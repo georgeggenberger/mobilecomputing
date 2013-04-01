@@ -2,7 +2,7 @@
  *  TODO CSS overwrite jQuery-Mobile
  *
  */
-
+.ui-content{padding: 15px 0;}
 .ui-page{background: #fff;}
 
 .ui-btn-text{z-index: inherit;}
@@ -12,4 +12,13 @@
 .ui-btn-inner{padding: 1.2em 20px;}
 
 /* removed close button in header of dialog */
-.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none; } 
+.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none; }
+
+#add-dialog{background: #fff !important;}
+#add-dialog .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
+#add-dialog #add-name{font-size: 22px; color: #666;}
+
+#add-dialog .ui-overlay-shadow{box-shadow: none;}
+#add-dialog .ui-content{background: none;}
+
+#add-dialog .ui-dialog-contain{width: 100%;}
