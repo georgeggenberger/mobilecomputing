@@ -12,4 +12,17 @@
 .ui-btn-inner{padding: 1.2em 20px;}
 
 /* removed close button in header of dialog */
-.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none; } 
+.ui-dialog  .ui-header .ui-btn-icon-notext	{ display:none; }
+
+/* error class for input validation */
+label.error {
+    float: none; 
+    color: red; 
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-top: 0.5em;
+    width: 100%;
+    display: block;
+    margin-left: 22%;
+}

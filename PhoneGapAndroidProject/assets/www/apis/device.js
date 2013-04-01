@@ -120,9 +120,12 @@ function init() {
     $("#add-item").click(function (e) {
         e.stopImmediatePropagation();
         
-        if($("#add-name").val() == '') {
+        var addName = $("#add-name").val();
+        
+        if(addName == '') {
         	 e.preventDefault();
         	 $("#add-item").removeClass("ui-btn-active");
+        	 $("label.error").text("Please enter a name!");
         } else {
         	//TODO todo validation and add actions
         }
