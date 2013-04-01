@@ -125,21 +125,22 @@ function init() {
     $("[data-role=footer]").fixedtoolbar({ tapToggle: false });
     
     console.log("registering add-item click event");
+
     $("#add-item").click(function (e) {
         e.stopImmediatePropagation();
-        
+   	    
         var addName = $("#add-name").val();
         
         if(addName == '') {
-        	 e.preventDefault();
-        	 $("#add-item").removeClass("ui-btn-active");
         	 $("label.error").text("Please enter a name!");
+        	 e.preventDefault();
+      	    $("#add-item").removeClass("ui-btn-active");
         } else {
         	//TODO todo validation and add actions
-        }
         
-        //calling the according todolist function
-        onSuccessConfirm($("#add-name").val());
+        	//calling the according todolist function
+        	onSuccessConfirm(addName);
+        }
     });
     
  /*   var showApi = function(e) {

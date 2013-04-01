@@ -70,7 +70,7 @@ function onSuccessConfirm(name)
 } 
 
 // -------------------------------------------------------------------------------------------------------------------
-// ACTION FUNCTIONS
+// DATABASE FUNCTIONS -- SETTER
 function todolistCreateDB()
 {
     db.transaction(onCreateDB, onError, onSuccessManipulate);    
@@ -146,6 +146,41 @@ function todolistAddNotebook(notebook)
 	db.transaction(onAddNotebook, onError, onSuccessUpdate);
 }
 
+//-------------------------------------------------------------------------------------------------------------------
+//DATABASE FUNCTIONS -- GETTER
+function todolistGetAllItems()
+{
+	var onQueryAllItems = function(tx)
+	{
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL', [], onSuccessSelect, onError);
+	}
+
+  db.transaction(onQueryAllItems, onError);    
+}
+
+function todolistGetAllNotebooks()
+{
+	var onQueryNotebooks = function(tx)
+	{
+	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST', [], onSuccessSelectLists, onError);
+	};
+
+  db.transaction(onQueryNotebooks, onError);    
+}
+
+function todolistGetItemsForNotebook(notebook)
+{
+	var onQueryItemsForNotebook = function(tx)
+	{
+	    //tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL AND notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
+	};
+
+  db.transaction(onQueryItemsForNotebook, onError);    
+}
+
+//-------------------------------------------------------------------------------------------------------------------
+//EVENT FUNCTIONS
 function onSuccessSelect(tx, results)
 {
     console.log("Num. Rows Returned = " + results.rows.length);
@@ -201,12 +236,6 @@ function onSuccessSelectLists(tx, results)
     	 var resultString = 
     		"<div id='" + results.rows.item(i).notebook + "' data-role='collapsible'><h3>" + 
     		results.rows.item(i).notebook + "</h3><p>" +
-    		/* "<p>[ Row " + i +
-	        ", ResultObject = " + results.rows.item(i) +
-	        ", ID (Timestamp) = " + results.rows.item(i).id +
-	        ", Notebook = " + results.rows.item(i).notebook +
-	        ", Title = " + results.rows.item(i).title +
-	        ", NoteText = " + results.rows.item(i).noteText + " ]</p>" + */
     		"</p></div>"; 
     	
     	$("div[data-role='collapsible-set']").append(resultString); 
@@ -223,7 +252,6 @@ function onSuccessSelectLists(tx, results)
 //Event-listener for expand
 function bindListEvent(notebook)
 {
-	
 	//BOTH EVENTS are working
 	$("div[id='" + notebook + "']").bind('expand', function () {
 	//$("div[id='" + notebook + "']").bind('tap taphold swipe swiperight swipeleft', function(event, ui) {
@@ -233,35 +261,3 @@ function bindListEvent(notebook)
 		todolistGetItemsForNotebook(notebook);
 	 });
 }
-
-function todolistGetAllItems()
-{
-	var onQueryAllItems = function(tx)
-	{
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL', [], onSuccessSelect, onError);
-	}
-
-    db.transaction(onQueryAllItems, onError);    
-}
-
-function todolistGetAllNotebooks()
-{
-	var onQueryNotebooks = function(tx)
-	{
-	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST', [], onSuccessSelectLists, onError);
-	};
-
-    db.transaction(onQueryNotebooks, onError);    
-}
-
-function todolistGetItemsForNotebook(notebook)
-{
-	var onQueryItemsForNotebook = function(tx)
-	{
-	    //tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL AND notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
-	};
-
-    db.transaction(onQueryItemsForNotebook, onError);    
-}
-
