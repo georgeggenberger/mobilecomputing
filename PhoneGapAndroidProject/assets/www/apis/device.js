@@ -106,6 +106,7 @@ var onDeviceReady = function() {
         //initializes initial view of todo-items
         todolistGetAllNotebooks();
     }
+    
 };
 
 function init() {
@@ -118,8 +119,15 @@ function init() {
     
     $("#add-item").click(function (e) {
         e.stopImmediatePropagation();
-        //e.preventDefault();
-        //Do important stuff....
+        
+        if($("#add-name").val() == '') {
+        	 e.preventDefault();
+        	 $("#add-item").removeClass("ui-btn-active");
+        } else {
+        	//TODO todo validation and add actions
+        }
+        
+        //calling the according todolist function
         onSuccessConfirm($("#add-name").val());
     });
     
