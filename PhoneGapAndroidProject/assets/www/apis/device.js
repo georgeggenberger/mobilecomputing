@@ -113,6 +113,7 @@ var onDeviceReady = function() {
         todolistGetAllNotebooks();
     }
     
+    // TODO document.bind pageinit, maybe necessary because of timing
 };
 
 function init() {
@@ -128,19 +129,31 @@ function init() {
 
     $("#add-item").click(function (e) {
         e.stopImmediatePropagation();
-   	    
+        //stop default action every time
+        e.preventDefault();
+        
         var addName = $("#add-name").val();
         
         if(addName == '') {
-        	 $("label.error").text("Please enter a name!");
-        	 e.preventDefault();
+            // No text entered (empty string)
+             $("#add-item").removeClass("ui-btn-active");
+             $("label.error").text("Please enter a name!");
+        } else if (addName.match(/^[a-zA-Z0-9\s\.]{3,100}$/)) { // Matches alphanumeric characters, space and .
+        	$("label.error").text("");
       	    $("#add-item").removeClass("ui-btn-active");
+        	// Entered text is valid
+            //todolistAddNotebook(addName); => is now in onSuccessConfirm! (and automatically refreshes DOM)
+            onSuccessConfirm($("#add-name").val());
         } else {
-        	//TODO todo validation and add actions
-        
-        	//calling the according todolist function
-        	onSuccessConfirm(addName);
+            // Entered text is invalid (too short, too long or forbidden characters).
+            $("#add-item").removeClass("ui-btn-active");
+            $("label.error").text("Entered text is invalid!");
         }
+    });
+    
+    //everytime the input field gets focus, remove previous errors
+    $('input#add-name').focus(function() {
+    	$("label.error").text("");
     });
     
  /*   var showApi = function(e) {

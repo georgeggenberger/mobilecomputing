@@ -66,7 +66,30 @@ function onSuccessManipulate()
 //DEMO-FUNCTION
 function onSuccessConfirm(name)
 {
-	 document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
+	var onSuccessCheck = function (tx, results) {
+		if(results.rows.length > 0) {
+			console.log("Notebook found! " + name);
+			//put error in dialog
+			$("label.error").text("Name already existing!");
+			$("input#add-name").val('');
+		}
+		else {
+			//add notebook and update DOM
+			todolistAddNotebook(name); 
+			//change to main page
+			$.mobile.changePage("#main");
+		}
+	};
+	
+	var onQueryItemsForNotebook = function(tx)
+	{
+
+	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST WHERE notebook="' + name + '"', [], onSuccessCheck, onError);
+	};
+
+	db.transaction(onQueryItemsForNotebook, onError); 
+	
+	document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
 } 
 
 // -------------------------------------------------------------------------------------------------------------------
@@ -153,7 +176,7 @@ function todolistGetAllItems()
 	var onQueryAllItems = function(tx)
 	{
 	    tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL', [], onSuccessSelect, onError);
-	}
+	};
 
   db.transaction(onQueryAllItems, onError);    
 }
