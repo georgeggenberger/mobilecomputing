@@ -142,7 +142,6 @@ function init() {
         } else if (addName.match(/^[a-zA-Z0-9\s\.]{3,100}$/)) { // Matches alphanumeric characters, space and .
         	$("label.error").text("");
         	// Entered text is valid
-            //todolistAddNotebook(addName); => is now in onSuccessConfirm! (and automatically refreshes DOM)
             onSuccessConfirm($("#add-name").val());
         } else {
             // Entered text is invalid (too short, too long or forbidden characters).

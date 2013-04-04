@@ -7,12 +7,12 @@
 // 		Drops the database if already created
 // todolistPopulateDB:
 //		Adds 2 example entries to the database
-// todolistAddItemToDB(notebook, title, noteText):
-//		Adds an item to the DB with the arguments 'notebook', 'title', 'noteText'
-//		All arguments are type of string, use empty string if no value given
-// todolistModifyItemFromDB(id, newNoteText):
-// 		Modifies the note text from the item with the given id.
-// todolistDeleteItemFromDB:
+// todolistAddItemToDB(notebook, noteText, finished):
+//		Adds an item to the DB with the arguments 'notebook', 'noteText', 'finished'
+//		First 2 arguments are type of string (use empty string if no value given), last argument is integer (0 for unfinished, 1 for finished)
+// todolistModifyItemFromDB(id, newNoteText, finished):
+// 		Modifies the note text and the finished flag (0 or 1) from the item with the given id.
+// todolistDeleteItemFromDB(id):
 //		Deletes the item with the according 'id' from the DB
 // todolistAddNotebook(notebook):
 //		Adds an empty notebook to the DB
@@ -27,7 +27,7 @@
 function onCreateDB(tx)
 {
 	// UTC timestamp is used for ID
-    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, notebook, title, noteText)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS TODOLIST (id unique, notebook, noteText, finished)');
 } 
 
 //JUST FOR TESTING PURPOSES
@@ -44,16 +44,16 @@ function todolistDropDB()
 //DEMO-FUNCTION
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "List 1", "Demo entry", "This is a demo text 1")');
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+1) + ', "List 1", "Another entry", "This is a demo text 2")');
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+2) + ', "List 2", "Yet Another entry", "This is a demo text 2")');
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+3) + ', "List 2", "Yet Another entry 2", "This is a demo text 3")');
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + (new Date().getTime()+4) + ', "List 3", "Demo entry 2", "This is a demo text 4")');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime() + ', "List 1", "This is a demo text 1", 0)');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+1) + ', "List 1", "This is a demo text 2", 1)');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+2) + ', "List 2", "This is yet another demo text", 0)');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+3) + ', "List 2", "This is a demo text 3", 1)');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+4) + ', "List 3", "This is a demo text 4", 0)');
 }
 
 function onError(err)
 {
-   console.log("Error processing SQL statement: " + err.code);
+   console.log("Error processing SQL statement, Error=" + err.code + ", Msg: " + err.message);
    document.getElementById('todo-sql-result').innerHTML = "<strong>Error processing SQL statement: " + err.code + "</strong>";
 }
 
@@ -108,31 +108,31 @@ function todolistPopulateDB()
     db.transaction(onPopulateDB, onError, onSuccessManipulate);    
 }
 
-function todolistAddItemToDB(notebook, title, noteText)
+function todolistAddItemToDB(notebook, noteText, finished)
 {
 	var onAddItem = function(tx)
 	{
-		tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "' + notebook + '", "' + title + '", "' + noteText + '")');
+		tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime() + ', "' + notebook + '", "' + notetext + '", ' + finished + ')');
 	};
 	
     db.transaction(onAddItem, onError, onSuccessManipulate);    
 }
 
-function todolistModifyItemFromDB(title, newNoteText)
+function todolistModifyItemFromDB(id, newNoteText, finished)
 {
 	var onModifyItem = function(tx)
 	{
-		tx.executeSql('UPDATE TODOLIST SET noteText="' + newNoteText + '" WHERE title="' + title + '"');
+		tx.executeSql('UPDATE TODOLIST SET noteText="' + newNoteText + '" WHERE id=' + id + '');
 	};
 	
     db.transaction(onModifyItem, onError, onSuccessManipulate);    
 }
 
-function todolistDeleteItemFromDB(title)
+function todolistDeleteItemFromDB(id)
 {
 	var onDeleteItem = function(tx)
 	{
-		tx.executeSql('DELETE FROM TODOLIST WHERE title="' + title + '"');
+		tx.executeSql('DELETE FROM TODOLIST WHERE id=' + id + '');
 	};
 	
     db.transaction(onDeleteItem, onError, onSuccessManipulate);    
@@ -145,7 +145,7 @@ function todolistAddNotebook(notebook)
 		// TODO we need to check if the name is already taken, we must not have same names here!
 		// either exiting here or after input validation
 		
-		tx.executeSql('INSERT INTO TODOLIST (id, notebook, title, noteText) VALUES (' + new Date().getTime() + ', "' + notebook + '", null, null)');
+		tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime() + ', "' + notebook + '", null, null)');
 	};
 	
 	var onSuccessUpdate = function()
@@ -179,7 +179,7 @@ function todolistGetAllItems()
 {
 	var onQueryAllItems = function(tx)
 	{
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL', [], onSuccessSelect, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE noteText IS NOT NULL', [], onSuccessSelect, onError);
 	};
 
   db.transaction(onQueryAllItems, onError);    
@@ -220,8 +220,9 @@ function onSuccessSelect(tx, results)
 	        //", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
 	        ", Notebook = " + results.rows.item(i).notebook +
-	        ", Title = " + results.rows.item(i).title +
-	        ", NoteText = " + results.rows.item(i).noteText + " ]<br/>";
+	        ", NoteText = " + results.rows.item(i).noteText +
+	        ", Finished = " + results.rows.item(i).finished +
+	        " ]<br/>";
     }
     document.getElementById('todo-sql-result').innerHTML = resultString;
 }
@@ -244,8 +245,9 @@ function onSuccessSelectItems(tx, results)
 	        //", ResultObject = " + results.rows.item(i) +
 	        ", ID (Timestamp) = " + results.rows.item(i).id +
 	        ", Notebook = " + results.rows.item(i).notebook +
-	        ", Title = " + results.rows.item(i).title +
-	        ", NoteText = " + results.rows.item(i).noteText + " ] <br/>";
+	        ", NoteText = " + results.rows.item(i).noteText +
+	        ", Finished = " + results.rows.item(i).finished +
+	        " ] <br/>";
     }
     resultString += "</p>";
     
