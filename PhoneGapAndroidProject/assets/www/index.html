@@ -39,8 +39,9 @@
 					<a data-role="button"  onclick="todolistDropDB();">Drop DB</a> -->	
 					<a data-role="button" data-corners="false" onclick="todolistPopulateDB();">Add example entries to DB</a>
 					<a data-role="button" data-corners="false" onclick="todolistAddItemToDB('List 1', 'Text of another entry', 0);">Add entry to DB</a>
-					<a data-role="button" data-corners="false" onclick="todolistModifyItemFromDB('Modified Text', 1);">Modify DB entry</a>
-					<!--<a data-role="button" data-corners="false" onclick="todolistDeleteItemFromDB(idToDelete);">Delete entry from DB</a>--> <!-- commented out, because ID is now known -->
+					<a data-role="button" data-corners="false" onclick="todolistModifyItemText(12345, 'Modified Text');">Modify text of entry</a>
+					<a data-role="button" data-corners="false" onclick="todolistModifyItemFinished(12345, 1);">Modify finished state of entry</a>
+					<a data-role="button" data-corners="false" onclick="todolistDeleteItemFromDB(12345);">Delete entry from DB</a>
 					<a data-role="button" data-corners="false" onclick="todolistGetAllItems();">Get all items</a>
 					<a data-role="button" data-corners="false" onclick="todolistGetAllNotebooks();">Get all notebooks</a>
 					<!-- FL: already implemented in the expand event -->

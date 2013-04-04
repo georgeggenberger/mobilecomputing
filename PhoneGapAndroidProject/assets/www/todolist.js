@@ -10,8 +10,10 @@
 // todolistAddItemToDB(notebook, noteText, finished):
 //		Adds an item to the DB with the arguments 'notebook', 'noteText', 'finished'
 //		First 2 arguments are type of string (use empty string if no value given), last argument is integer (0 for unfinished, 1 for finished)
-// todolistModifyItemFromDB(id, newNoteText, finished):
-// 		Modifies the note text and the finished flag (0 or 1) from the item with the given id.
+// todolistModifyItemText(id, newNoteText)
+// 		Modifies the note text from the item with the given id.
+// todolistModifyItemFinished(id, finished)
+// 		Modifies the finished flag (0 or 1) for the item with the given id.
 // todolistDeleteItemFromDB(id):
 //		Deletes the item with the according 'id' from the DB
 // todolistAddNotebook(notebook):
@@ -97,16 +99,16 @@ function onSuccessConfirmNotebook(name)
 	//document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
 }
 
-function onSuccessConfirmModifyItem(id, text, finished)
+function onSuccessConfirmModifyItem(id, text)
 {
-	console.log("Modify item with id=" + id + ", Text=" + text + ", Finished=" + finished);
+	console.log("Modify item with id=" + id + ", Text:" + text);
 	
 	var onSuccessCheck = function (tx, results)
 	{
 		if (results.rows.length > 0)
 		{
 			//add item and update DOM
-			todolistModifyItemFromDB(id, text, finished); 
+			todolistModifyItemText(id, text); 
 			//change to main page
 			$.mobile.changePage("#main", {
 		        transition: "slide",
@@ -127,18 +129,18 @@ function onSuccessConfirmModifyItem(id, text, finished)
 
 	db.transaction(onQueryItemsForId, onError); 
 	
-	//document.getElementById('todo-sql-result').innerHTML = "<strong>Modify item with id=" + id + ", finished=" + finished + ", Text: " + text + "</strong>";
+	//document.getElementById('todo-sql-result').innerHTML = "<strong>Modify item with id=" + id + ", Text: " + text + "</strong>";
 }
 
-function onSuccessConfirmAddItem(notebook, text, finished)
+function onSuccessConfirmAddItem(notebook, text)
 {
-	console.log("Add item to Notebook=" + notebook + ", Text=" + text + ", Finished=" + finished);
+	console.log("Add item to Notebook=" + notebook + ", Text:" + text);
 
 	var onSuccessCheck = function (tx, results)
 	{
 		if (results.rows.length > 0) {
 			// add item to notebook and update DOM
-			todolistAddItemToDB(notebook, text, finished); 
+			todolistAddItemToDB(notebook, text, 0); 
 			//change to main page
 			$.mobile.changePage("#main", {
 		        transition: "slide",
@@ -185,11 +187,21 @@ function todolistAddItemToDB(notebook, noteText, finished)
     db.transaction(onAddItem, onError, onSuccessManipulate);    
 }
 
-function todolistModifyItemFromDB(id, newNoteText, finished)
+function todolistModifyItemText(id, newNoteText)
 {
 	var onModifyItem = function(tx)
 	{
 		tx.executeSql('UPDATE TODOLIST SET noteText="' + newNoteText + '" WHERE id=' + id + '');
+	};
+	
+    db.transaction(onModifyItem, onError, onSuccessManipulate);    
+}
+
+function todolistModifyItemFinished(id, finished)
+{
+	var onModifyItem = function(tx)
+	{
+		tx.executeSql('UPDATE TODOLIST SET finished=' + finished + ' WHERE id=' + id + '');
 	};
 	
     db.transaction(onModifyItem, onError, onSuccessManipulate);    

@@ -171,20 +171,15 @@ function init() {
         if(text == '') {
             // No text entered (empty string)
              $("label.error").text("Please enter text for content!");
-             // TODO AL adjust regex below (add special characters like ?, !, etc.)
+             // TODO AL: adjust regex below (add special characters like ?, !, etc.)
         } else if (text.match(/^[a-zA-Z0-9\s\.]{10,200}$/)) { // Matches alphanumeric characters, space and .
         	$("label.error").text("");
         	// Entered text is valid
-            onSuccessConfirmAddItem(notebook, text, 0);
+            onSuccessConfirmAddItem(notebook, text);
         } else {
             // Entered text is invalid (too short, too long or forbidden characters).
             $("label.error").text("Entered text is invalid!");
         }
-  
-		$.mobile.changePage("#main", {
-	        transition: "slide",
-	        reverse: true
-	    });
     });
     
   //everytime the input field gets focus, remove previous errors
