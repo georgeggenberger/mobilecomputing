@@ -49,6 +49,7 @@ function onPopulateDB(tx)
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+2) + ', "List 2", "This is yet another demo text", 0)');
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+3) + ', "List 2", "This is a demo text 3", 1)');
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+4) + ', "List 3", "This is a demo text 4", 0)');
+    tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (12345, "List 1", "This is a demo text with hardcoded ID", 0)');
 }
 
 function onError(err)
@@ -64,16 +65,18 @@ function onSuccessManipulate()
 }
 
 //DEMO-FUNCTION
-function onSuccessConfirm(name)
+function onSuccessConfirmNotebook(name)
 {
 	var onSuccessCheck = function (tx, results) {
-		if(results.rows.length > 0) {
+		if (results.rows.length > 0)
+		{
 			console.log("Notebook found! " + name);
 			//put error in dialog
 			$("label.error").text("Name already existing!");
 			//$("input#add-name").val('');
 		}
-		else {
+		else
+		{
 			//add notebook and update DOM
 			todolistAddNotebook(name); 
 			//change to main page
@@ -86,14 +89,78 @@ function onSuccessConfirm(name)
 	
 	var onQueryItemsForNotebook = function(tx)
 	{
-
 	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST WHERE notebook="' + name + '"', [], onSuccessCheck, onError);
 	};
 
 	db.transaction(onQueryItemsForNotebook, onError); 
 	
-	document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
-} 
+	//document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
+}
+
+function onSuccessConfirmModifyItem(id, text, finished)
+{
+	console.log("Modify item with id=" + id + ", Text=" + text + ", Finished=" + finished);
+	
+	var onSuccessCheck = function (tx, results)
+	{
+		if (results.rows.length > 0)
+		{
+			//add item and update DOM
+			todolistModifyItemFromDB(id, text, finished); 
+			//change to main page
+			$.mobile.changePage("#main", {
+		        transition: "slide",
+		        reverse: true
+		    });
+		}
+		else
+		{
+			// if id doesn't exists -> show error 
+			$("label.error").text("Item with ID doesn't exist!");
+		}
+	};
+	
+	var onQueryItemsForId = function(tx)
+	{
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE id=' + id + '', [], onSuccessCheck, onError);
+	};
+
+	db.transaction(onQueryItemsForId, onError); 
+	
+	//document.getElementById('todo-sql-result').innerHTML = "<strong>Modify item with id=" + id + ", finished=" + finished + ", Text: " + text + "</strong>";
+}
+
+function onSuccessConfirmAddItem(notebook, text, finished)
+{
+	console.log("Add item to Notebook=" + notebook + ", Text=" + text + ", Finished=" + finished);
+
+	var onSuccessCheck = function (tx, results)
+	{
+		if (results.rows.length > 0) {
+			// add item to notebook and update DOM
+			todolistAddItemToDB(notebook, text, finished); 
+			//change to main page
+			$.mobile.changePage("#main", {
+		        transition: "slide",
+		        reverse: true
+		    });
+		}
+		else {
+			console.log("Notebook not found: " + notebook);
+			//put error in dialog
+			$("label.error").text("Notebook doesn't exist!");
+		}
+	};
+	
+	var onQueryItemsForNotebook = function(tx)
+	{
+	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessCheck, onError);
+	};
+
+	db.transaction(onQueryItemsForNotebook, onError); 
+	
+	//document.getElementById('todo-sql-result').innerHTML = "<strong>Add item to notebook " + notebook + ", Text: " + text + "</strong>";
+}
 
 // -------------------------------------------------------------------------------------------------------------------
 // DATABASE FUNCTIONS -- SETTER
@@ -112,7 +179,7 @@ function todolistAddItemToDB(notebook, noteText, finished)
 {
 	var onAddItem = function(tx)
 	{
-		tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime() + ', "' + notebook + '", "' + notetext + '", ' + finished + ')');
+		tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime() + ', "' + notebook + '", "' + noteText + '", ' + finished + ')');
 	};
 	
     db.transaction(onAddItem, onError, onSuccessManipulate);    
