@@ -71,13 +71,16 @@ function onSuccessConfirm(name)
 			console.log("Notebook found! " + name);
 			//put error in dialog
 			$("label.error").text("Name already existing!");
-			$("input#add-name").val('');
+			//$("input#add-name").val('');
 		}
 		else {
 			//add notebook and update DOM
 			todolistAddNotebook(name); 
 			//change to main page
-			$.mobile.changePage("#main");
+			$.mobile.changePage("#main", {
+		        transition: "slide",
+		        reverse: true
+		    });
 		}
 	};
 	
@@ -171,6 +174,7 @@ function todolistAddNotebook(notebook)
 
 //-------------------------------------------------------------------------------------------------------------------
 //DATABASE FUNCTIONS -- GETTER
+//TODO sort by date, newest first?
 function todolistGetAllItems()
 {
 	var onQueryAllItems = function(tx)
@@ -181,6 +185,7 @@ function todolistGetAllItems()
   db.transaction(onQueryAllItems, onError);    
 }
 
+// TODO sort by date, newest first?
 function todolistGetAllNotebooks()
 {
 	var onQueryNotebooks = function(tx)
