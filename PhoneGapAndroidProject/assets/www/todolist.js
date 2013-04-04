@@ -66,15 +66,16 @@ function onSuccessManipulate()
    document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
-//DEMO-FUNCTION
+
 function onSuccessConfirmNotebook(name)
 {
-	var onSuccessCheck = function (tx, results) {
+	var onSuccessCheck = function (tx, results)
+	{
 		if (results.rows.length > 0)
 		{
 			console.log("Notebook found! " + name);
 			//put error in dialog
-			$("label.error").text("Name already existing!");
+			$("label.error").text("Name already exists!");
 			//$("input#add-name").val('');
 		}
 		else
@@ -97,6 +98,39 @@ function onSuccessConfirmNotebook(name)
 	db.transaction(onQueryItemsForNotebook, onError); 
 	
 	//document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
+}
+
+function onSuccessConfirmAddItem(notebook, text)
+{
+	console.log("Add item to Notebook=" + notebook + ", Text:" + text);
+
+	var onSuccessCheck = function (tx, results)
+	{
+		if (results.rows.length > 0)
+		{
+			// add item to notebook and update DOM
+			todolistAddItemToDB(notebook, text, 0); 
+			//change to main page
+			$.mobile.changePage("#main", {
+		        transition: "slide",
+		        reverse: true
+		    });
+		}
+		else {
+			console.log("Notebook not found: " + notebook);
+			//put error in dialog
+			$("label.error").text("Notebook doesn't exist!");
+		}
+	};
+	
+	var onQueryItemsForNotebook = function(tx)
+	{
+	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessCheck, onError);
+	};
+
+	db.transaction(onQueryItemsForNotebook, onError); 
+	
+	//document.getElementById('todo-sql-result').innerHTML = "<strong>Add item to notebook " + notebook + ", Text: " + text + "</strong>";
 }
 
 function onSuccessConfirmModifyItem(id, text)
@@ -132,36 +166,37 @@ function onSuccessConfirmModifyItem(id, text)
 	//document.getElementById('todo-sql-result').innerHTML = "<strong>Modify item with id=" + id + ", Text: " + text + "</strong>";
 }
 
-function onSuccessConfirmAddItem(notebook, text)
+function onSuccessConfirmDeleteItem(id)
 {
-	console.log("Add item to Notebook=" + notebook + ", Text:" + text);
-
+	console.log("Delete item with id=" + id);
+	
 	var onSuccessCheck = function (tx, results)
 	{
-		if (results.rows.length > 0) {
-			// add item to notebook and update DOM
-			todolistAddItemToDB(notebook, text, 0); 
+		if (results.rows.length > 0)
+		{
+			//delete item and update DOM
+			todolistDeleteItemFromDB(id); 
 			//change to main page
 			$.mobile.changePage("#main", {
 		        transition: "slide",
 		        reverse: true
 		    });
 		}
-		else {
-			console.log("Notebook not found: " + notebook);
-			//put error in dialog
-			$("label.error").text("Notebook doesn't exist!");
+		else
+		{
+			// if id doesn't exists -> show error 
+			$("label.error").text("Item with ID doesn't exist!");
 		}
 	};
 	
-	var onQueryItemsForNotebook = function(tx)
+	var onQueryItemsForId = function(tx)
 	{
-	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessCheck, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE id=' + id + '', [], onSuccessCheck, onError);
 	};
 
-	db.transaction(onQueryItemsForNotebook, onError); 
+	db.transaction(onQueryItemsForId, onError); 
 	
-	//document.getElementById('todo-sql-result').innerHTML = "<strong>Add item to notebook " + notebook + ", Text: " + text + "</strong>";
+	//document.getElementById('todo-sql-result').innerHTML = "<strong>Delete item with id=" + id + ", Text: " + text + "</strong>";
 }
 
 // -------------------------------------------------------------------------------------------------------------------
