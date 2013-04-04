@@ -232,8 +232,10 @@ function onSuccessSelectItems(tx, results)
     console.log("Items - Num. Rows Returned = " + results.rows.length);
     
 	$("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').empty();
-    
-    var resultString = "<p><strong>Rows Returned = " + results.rows.length + "</strong><br/>";
+       
+    var resultString = "<p><a data-role='button' data-corners='false' data-icon='plus' data-theme='b' data-iconpos='right' " + 
+	"href='#add-dialog-item' data-rel='dialog' data-transition='slide' data-mini='true'>Add TODO-Item</a></p><p>";	
+	
     for (var i = 0; i < results.rows.length; i++)
     {
     	// Remark: if 'results.rows.item(i).title' is null, then it's a placeholder item for a notebook and could be ignored
@@ -248,6 +250,8 @@ function onSuccessSelectItems(tx, results)
     resultString += "</p>";
     
     $("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').append(resultString);
+    
+    $("div[id='" + results.rows.item(0).notebook + "']").find('a[data-role="button"]').button();
     
     $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
 }

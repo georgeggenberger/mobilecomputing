@@ -126,12 +126,13 @@ function init() {
     $("[data-role=footer]").fixedtoolbar({ tapToggle: false });
     
     console.log("registering add-item click event");
-
-    $("#add-item").click(function (e) {
+    
+    //Event for Adding a List
+    $("#add-list").click(function (e) {
         e.stopImmediatePropagation();
         //stop default action every time
         e.preventDefault();
-        $("#add-item").removeClass("ui-btn-active");
+        $("#add-list").removeClass("ui-btn-active");
         
         var addName = $("#add-name").val();
         
@@ -155,6 +156,28 @@ function init() {
     
     //everytime the input field gets focus, remove previous errors
     $('input#add-name').focus(function() {
+    	$("label.error").text("");
+    });
+    
+    //Event for adding a TODO Item (Testing)
+    $("#add-item").click(function (e) {
+    	e.stopImmediatePropagation();
+        //stop default action every time
+        e.preventDefault();
+        $("#add-item").removeClass("ui-btn-active");
+        
+        var text = $("#add-text").val();
+        
+        document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + text + "</strong>";
+        
+		$.mobile.changePage("#main", {
+	        transition: "slide",
+	        reverse: true
+	    });
+    });
+    
+  //everytime the input field gets focus, remove previous errors
+    $('input#add-item').focus(function() {
     	$("label.error").text("");
     });
     

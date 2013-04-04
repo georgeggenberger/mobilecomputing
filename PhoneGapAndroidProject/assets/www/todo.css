@@ -27,7 +27,7 @@ label.error {
     margin-left: 22%;
 }
 
-#add-dialog{background: #fff !important;}
+#add-dialog {background: #fff !important;}
 #add-dialog .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
 #add-dialog #add-name{font-size: 22px; color: #666;}
 
@@ -35,3 +35,12 @@ label.error {
 #add-dialog .ui-content{background: none;}
 
 #add-dialog .ui-dialog-contain{width: 100%;}
+
+#add-dialog-item {background: #fff !important;}
+#add-dialog-item .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
+#add-dialog-item #add-name{font-size: 22px; color: #666;}
+
+#add-dialog-item .ui-overlay-shadow{box-shadow: none;}
+#add-dialog-item .ui-content{background: none;}
+
+#add-dialog-item .ui-dialog-contain{width: 100%;}
