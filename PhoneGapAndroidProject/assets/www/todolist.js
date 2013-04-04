@@ -66,6 +66,12 @@ function onSuccessManipulate()
    document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
+function onSuccessUpdateDOM() 
+{
+	console.log("Success manipulating DB");
+	document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
+}
+
 
 function onSuccessConfirmNotebook(name)
 {
@@ -110,11 +116,19 @@ function onSuccessConfirmAddItem(notebook, text)
 		{
 			// add item to notebook and update DOM
 			todolistAddItemToDB(notebook, text, 0); 
+            //we have to do this because new item won't show up in DOM after clicking the button an returning to the main page
+            todolistGetItemsForNotebook(notebook);
 			//change to main page
 			$.mobile.changePage("#main", {
 		        transition: "slide",
 		        reverse: true
 		    });
+
+			//testing scrolling to expanded list:
+			console.log("TESTING: " + $('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
+			
+			//TODO: scrolling does not work
+			//$.mobile.silentScroll($('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
 		}
 		else {
 			console.log("Notebook not found: " + notebook);
@@ -264,7 +278,6 @@ function todolistAddNotebook(notebook)
 	
 	var onSuccessUpdate = function()
 	{
-		
 		var resultString = 
     		"<div id='" + notebook + "' data-role='collapsible'><h3>" + 
     		notebook + "</h3><p>" +
@@ -346,7 +359,9 @@ function onSuccessSelectItems(tx, results)
 {
     console.log("Items - Num. Rows Returned = " + results.rows.length);
     
-	$("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').empty();
+    var notebookName = results.rows.item(0).notebook;
+    
+	$("div[id='" + notebookName + "']").find('div[class="ui-collapsible-content"]').empty();
        
     var resultString = "<p><a data-role='button' data-corners='false' data-icon='plus' data-theme='b' data-iconpos='right' " + 
 	"href='#add-dialog-item' data-rel='dialog' data-transition='slide' data-mini='true'>Add TODO-Item</a></p><p>";	
@@ -365,11 +380,12 @@ function onSuccessSelectItems(tx, results)
     }
     resultString += "</p>";
     
-    $("div[id='" + results.rows.item(0).notebook + "']").find('div[class="ui-collapsible-content"]').append(resultString);
-    
-    $("div[id='" + results.rows.item(0).notebook + "']").find('a[data-role="button"]').button();
-    
+    $("div[id='" + notebookName + "']").find('div[class="ui-collapsible-content"]').append(resultString);
+    $("div[id='" + notebookName + "']").find('a[data-role="button"]').button();
     $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
+    
+    //adding id to content, we need the notebook name afterwards (a bit dirty)
+    $("#add-dialog-item").find('div[data-role="content"]').attr('id', notebookName);
 }
 
 //creation of accordion items: http://jquerymobile.com/demos/1.2.1/docs/content/content-collapsible-set.html
@@ -390,7 +406,6 @@ function onSuccessSelectLists(tx, results)
     	
     	//binding event to notebook element
     	bindListEvent(results.rows.item(i).notebook);
-    	
     }
     
     $("div[data-role='collapsible-set']").collapsibleset('refresh'); 

@@ -64,7 +64,8 @@ h1,ul,li {
 	padding: 0px 1%;
 	/* float: right; */
 	width: auto;
-	overflow: auto;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	top: 33px;
 }
 #content { 

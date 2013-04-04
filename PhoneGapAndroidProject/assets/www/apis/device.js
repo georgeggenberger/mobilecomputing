@@ -127,6 +127,11 @@ function init() {
     
     console.log("registering add-item click event");
     
+    //pageshow Event for Adding List Dialog
+    $("#add-dialog-list").live('pageshow',function() {
+    	$("#add-name").val('');
+    });
+    
     //Event for Adding a List
     $("#add-list").click(function (e) {
         e.stopImmediatePropagation();
@@ -142,7 +147,7 @@ function init() {
         } else if (addName.match(/^[a-zA-Z0-9\s\.]{3,100}$/)) { // Matches alphanumeric characters, space and .
         	$("label.error").text("");
         	// Entered text is valid
-            onSuccessConfirmNotebook($("#add-name").val());
+            onSuccessConfirmNotebook(addName);
         } else {
             // Entered text is invalid (too short, too long or forbidden characters).
             $("label.error").text("Entered text is invalid!");
@@ -158,24 +163,31 @@ function init() {
     	$("label.error").text("");
     });
     
-    //Event for adding a TODO Item (Testing)
+    //pageshow Event for Adding a TODO Dialog
+    $("#add-dialog-item").live('pageshow',function() {
+    	$("#add-text").val('');
+    });
+    
+    //Event for adding a TODO Item
     $("#add-item").click(function (e) {
     	e.stopImmediatePropagation();
         //stop default action every time
         e.preventDefault();
         $("#add-item").removeClass("ui-btn-active");
 
-		var notebook = "List 1"; // TODO assign current notebook value here        
+		var notebook = $("#add-item").closest('div[data-role="content"]').attr('id');
+		console.log("Notebook to add to " + notebook);
         var text = $("#add-text").val();
         
         if(text == '') {
             // No text entered (empty string)
              $("label.error").text("Please enter text for content!");
              // TODO AL: adjust regex below (add special characters like ?, !, etc.)
-        } else if (text.match(/^[a-zA-Z0-9\s\.]{10,200}$/)) { // Matches alphanumeric characters, space and .
+        } else if (text.match(/^[a-zA-Z0-9\s\.]{5,200}$/)) { // Matches alphanumeric characters, space and .
         	$("label.error").text("");
         	// Entered text is valid
             onSuccessConfirmAddItem(notebook, text);
+            
         } else {
             // Entered text is invalid (too short, too long or forbidden characters).
             $("label.error").text("Entered text is invalid!");

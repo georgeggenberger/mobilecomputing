@@ -49,9 +49,9 @@
 					<!-- FL: already implemented in the dialog below -->
 					<!-- <a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" onclick="todolistAddNotebook('New List');">Add List</a> -->
 					<!--  FL: Dialog for adding List -->
-					<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" href="#add-dialog" data-rel="dialog" data-transition="slide">Add TODO-List</a>
-					<!--  FL: Dialog for adding Item -->
-					<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" href="#add-dialog-item" data-rel="dialog" data-transition="slide" data-mini="true">Add TODO-Item</a>
+					<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" href="#add-dialog-list" data-rel="dialog" data-transition="slide">Add TODO-List</a>
+					<!--  FL: Dialog for adding Item 
+					<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" href="#add-dialog-item" data-rel="dialog" data-transition="slide" data-mini="true">Add TODO-Item</a> -->
 				<div class="result-block">
 					<p>SQL Result: <br/><span id="todo-sql-result"></span></p>
 				</div>
@@ -113,7 +113,7 @@
   </div> <!--  /page -->
   
 <!-- Dialog Add List-->
-	<div data-role="dialog" id="add-dialog">
+	<div data-role="dialog" id="add-dialog-list">
 	  	<div data-role="header" id="header" >
 			<h1>Add new Notebook</h1>
 		</div>
@@ -161,6 +161,6 @@
 	<script type="text/javascript" charset="utf-8" src="apis/notification.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/storage.js"></script>
 	
-<!-- 	<script src="http://192.168.0.14:8080/target/target-script-min.js#mco-debugger"></script> -->
+<!--  	<script src="http://192.168.0.14:8080/target/target-script-min.js#mco-debugger"></script> -->
   </body>
 </html>
