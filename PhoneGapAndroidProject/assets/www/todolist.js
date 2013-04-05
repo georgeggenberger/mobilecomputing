@@ -311,12 +311,11 @@ function todolistGetAllItems()
   db.transaction(onQueryAllItems, onError);    
 }
 
-// TODO sort by date, newest first?
 function todolistGetAllNotebooks()
 {
 	var onQueryNotebooks = function(tx)
 	{
-	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST', [], onSuccessSelectLists, onError);
+	    tx.executeSql('SELECT DISTINCT(notebook) FROM TODOLIST ORDER BY id DESC', [], onSuccessSelectLists, onError);
 	};
 
   db.transaction(onQueryNotebooks, onError);    
