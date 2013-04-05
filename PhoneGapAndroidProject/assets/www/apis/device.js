@@ -183,7 +183,8 @@ function init() {
             // No text entered (empty string)
              $("label.error").text("Please enter text for content!");
              // TODO AL: adjust regex below (add special characters like ?, !, etc.)
-        } else if (text.match(/^[a-zA-Z0-9\s\.]{5,200}$/)) { // Matches alphanumeric characters, space and .
+        } else if (text.match(/^[a-zA-Z0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
+        	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
         	$("label.error").text("");
         	// Entered text is valid
             onSuccessConfirmAddItem(notebook, text);
