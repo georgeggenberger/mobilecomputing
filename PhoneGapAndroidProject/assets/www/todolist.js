@@ -301,12 +301,11 @@ function todolistAddNotebook(notebook)
 
 //-------------------------------------------------------------------------------------------------------------------
 //DATABASE FUNCTIONS -- GETTER
-//TODO sort by date, newest first?
 function todolistGetAllItems()
 {
 	var onQueryAllItems = function(tx)
 	{
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE noteText IS NOT NULL', [], onSuccessSelect, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE noteText IS NOT NULL ORDER BY id DESC', [], onSuccessSelect, onError);
 	};
 
   db.transaction(onQueryAllItems, onError);    
@@ -327,8 +326,8 @@ function todolistGetItemsForNotebook(notebook)
 {
 	var onQueryItemsForNotebook = function(tx)
 	{
-	    //tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL AND notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '"', [], onSuccessSelectItems, onError);
+	    //tx.executeSql('SELECT * FROM TODOLIST WHERE title IS NOT NULL AND notebook="' + notebook + '" ORDER BY id DESC', [], onSuccessSelectItems, onError);
+	    tx.executeSql('SELECT * FROM TODOLIST WHERE notebook="' + notebook + '" ORDER BY id DESC', [], onSuccessSelectItems, onError);
 	};
 
   db.transaction(onQueryItemsForNotebook, onError);    
