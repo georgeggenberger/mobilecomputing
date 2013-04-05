@@ -340,14 +340,17 @@ function onSuccessSelect(tx, results)
     var resultString = "<strong>Rows Returned = " + results.rows.length + "</strong><br/>";
     for (var i = 0; i < results.rows.length; i++)
     {
-    	resultString = resultString +
-    		" [ Row " + i +
-	        //", ResultObject = " + results.rows.item(i) +
-	        ", ID (Timestamp) = " + results.rows.item(i).id +
-	        ", Notebook = " + results.rows.item(i).notebook +
-	        ", NoteText = " + results.rows.item(i).noteText +
-	        ", Finished = " + results.rows.item(i).finished +
-	        " ]<br/>";
+    	if (results.rows.item(i).noteText != null)
+    	{
+	    	resultString = resultString +
+	    		" [ Row " + i +
+		        //", ResultObject = " + results.rows.item(i) +
+		        ", ID (Timestamp) = " + results.rows.item(i).id +
+		        ", Notebook = " + results.rows.item(i).notebook +
+		        ", NoteText = " + results.rows.item(i).noteText +
+		        ", Finished = " + results.rows.item(i).finished +
+		        " ]<br/>";
+	    }
     }
     document.getElementById('todo-sql-result').innerHTML = resultString;
 }
@@ -367,14 +370,16 @@ function onSuccessSelectItems(tx, results)
     for (var i = 0; i < results.rows.length; i++)
     {
     	// Remark: if 'results.rows.item(i).title' is null, then it's a placeholder item for a notebook and could be ignored
-    	
-    	resultString += " [ Row " + i +
-	        //", ResultObject = " + results.rows.item(i) +
-	        ", ID (Timestamp) = " + results.rows.item(i).id +
-	        ", Notebook = " + results.rows.item(i).notebook +
-	        ", NoteText = " + results.rows.item(i).noteText +
-	        ", Finished = " + results.rows.item(i).finished +
-	        " ] <br/>";
+    	if (results.rows.item(i).noteText != null)
+    	{
+	    	resultString += " [ Row " + i +
+		        //", ResultObject = " + results.rows.item(i) +
+		        ", ID (Timestamp) = " + results.rows.item(i).id +
+		        ", Notebook = " + results.rows.item(i).notebook +
+		        ", NoteText = " + results.rows.item(i).noteText +
+		        ", Finished = " + results.rows.item(i).finished +
+		        " ] <br/>";
+		 }
     }
     resultString += "</p>";
     
