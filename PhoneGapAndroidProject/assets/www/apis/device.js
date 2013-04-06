@@ -127,6 +127,15 @@ function init() {
     
     console.log("registering add-item click event");
     
+    //pageshow Event for the Main Page
+    $("#main").live('pageshow', function () {
+    	//testing scrolling to expanded list:
+		console.log("TESTING SCROLL: " + $('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
+		
+		//scroll to expanded accordion item
+		$.mobile.silentScroll($('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
+    });
+    
     //pageshow Event for Adding List Dialog
     $("#add-dialog-list").live('pageshow',function() {
     	$("#add-name").val('');

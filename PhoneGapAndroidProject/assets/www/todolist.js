@@ -123,12 +123,6 @@ function onSuccessConfirmAddItem(notebook, text)
 		        transition: "slide",
 		        reverse: true
 		    });
-
-			//testing scrolling to expanded list:
-			console.log("TESTING: " + $('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
-			
-			//TODO: scrolling does not work
-			//$.mobile.silentScroll($('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
 		}
 		else {
 			console.log("Notebook not found: " + notebook);
