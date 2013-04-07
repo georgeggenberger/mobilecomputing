@@ -30,14 +30,14 @@ label.error {
     margin-left: 22%;
 }
 
-#add-dialog {background: #fff !important;}
-#add-dialog .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
-#add-dialog #add-name{font-size: 22px; color: #666;}
+#add-dialog-list {background: #fff !important;}
+#add-dialog-list .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
+#add-dialog-list #add-name{font-size: 22px; color: #666;}
 
-#add-dialog .ui-overlay-shadow{box-shadow: none;}
-#add-dialog .ui-content{background: none;}
+#add-dialog-list .ui-overlay-shadow{box-shadow: none;}
+#add-dialog-list .ui-content{background: none;}
 
-#add-dialog .ui-dialog-contain{width: 100%;}
+#add-dialog-list .ui-dialog-contain{width: 100%;}
 
 #add-dialog-item {background: #fff !important;}
 #add-dialog-item .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
