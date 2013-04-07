@@ -358,14 +358,14 @@ function onSuccessSelectItems(tx, results)
     
 	$("div[id='" + notebookName + "']").find('div[class="ui-collapsible-content"]').empty();
        
-    var resultString = "<p><a data-role='button' data-corners='false' data-icon='plus' data-theme='b' data-iconpos='right' " + 
-	"href='#add-dialog-item' data-rel='dialog' data-transition='slide' data-mini='true'>Add TODO-Item</a></p><p>";	
+    var resultString = "<fieldset data-role='controlgroup'>";	
 	
     for (var i = 0; i < results.rows.length; i++)
     {
     	// Remark: if 'results.rows.item(i).title' is null, then it's a placeholder item for a notebook and could be ignored
     	if (results.rows.item(i).noteText != null)
     	{
+    		/*
 	    	resultString += " [ Row " + i +
 		        //", ResultObject = " + results.rows.item(i) +
 		        ", ID (Timestamp) = " + results.rows.item(i).id +
@@ -373,9 +373,17 @@ function onSuccessSelectItems(tx, results)
 		        ", NoteText = " + results.rows.item(i).noteText +
 		        ", Finished = " + results.rows.item(i).finished +
 		        " ] <br/>";
+		     */
+		     resultString += 
+		     	'<input type="checkbox" name="checkbox" id="checkbox-2a">' +
+		     	'<label for="checkbox">' +
+		     	results.rows.item(i).noteText +
+		     	'</label><br/>';
 		 }
     }
-    resultString += "</p>";
+    resultString += "</fieldset>";
+    resultString += "<a data-role='button' data-corners='false' data-icon='plus' data-theme='b' data-iconpos='right' " + 
+	"href='#add-dialog-item' data-rel='dialog' data-transition='slide' data-mini='true'>Add TODO-Item</a>"
     
     $("div[id='" + notebookName + "']").find('div[class="ui-collapsible-content"]').append(resultString);
     $("div[id='" + notebookName + "']").find('a[data-role="button"]').button();

@@ -39,7 +39,7 @@ h1,ul,li {
 #sidebar {
 	background-color: #ECEAE7;
 	overflow: auto;
-	padding: 30px 2% 20px 0px;
+	padding: 0px 2% 20px 0px;
 	text-align: right;
     /* position: fixed; */
 	float: left;
@@ -255,9 +255,9 @@ dl > dd{
 	#sidebar { display: none; }	
 	#scrollable {
 		padding: 0px;
-		margin: 64px 1% 0px 1%;
+		margin: 0px 1% 0px 1%;
 		float: left;
-		width: 97%;
+		width: 99%;
 		overflow: auto;
 	}	
 	#subheader {

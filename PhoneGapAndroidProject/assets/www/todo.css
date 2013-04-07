@@ -2,6 +2,9 @@
  *  TODO CSS overwrite jQuery-Mobile
  *
  */
+
+#main{padding-top: 10px !important;}
+
 .ui-content{padding: 15px 0;}
 .ui-page{background: #fff;}
 
@@ -44,3 +47,9 @@ label.error {
 #add-dialog-item .ui-content{background: none;}
 
 #add-dialog-item .ui-dialog-contain{width: 100%;}
+
+/* Content for Notebook-List */
+.ui-collapsible-content{border: 1px solid #ccc; border-width: 0 1px; background: #eee; padding: 10px 0 !important;}
+
+#view-block .ui-collapsible{border-radius: 0 !important; }
+
