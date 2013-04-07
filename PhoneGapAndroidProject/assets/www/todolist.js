@@ -383,7 +383,7 @@ function onSuccessSelectItems(tx, results)
     }
     resultString += "</fieldset>";
     resultString += "<a data-role='button' data-corners='false' data-icon='plus' data-theme='b' data-iconpos='right' " + 
-	"href='#add-dialog-item' data-rel='dialog' data-transition='slide' data-mini='true'>Add TODO-Item</a>"
+	"href='#add-dialog-item' data-rel='dialog' data-transition='slide' data-mini='true'>Add TODO-Item</a>";
     
     $("div[id='" + notebookName + "']").find('div[class="ui-collapsible-content"]').append(resultString);
     $("div[id='" + notebookName + "']").find('a[data-role="button"]').button();
@@ -404,8 +404,8 @@ function onSuccessSelectLists(tx, results)
     {
     	 var resultString = 
     		"<div id='" + results.rows.item(i).notebook + "' data-role='collapsible'><h3>" + 
-    		results.rows.item(i).notebook + "</h3><p>" +
-    		"</p></div>"; 
+    		results.rows.item(i).notebook + "</h3>" +
+    		"</div>"; 
     	
     	$("div[data-role='collapsible-set']").append(resultString); 
     	
