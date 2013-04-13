@@ -22,6 +22,7 @@ function onBackbutton() {
 	
     // the intro div is considered home, so exit if user
     // wants to go back with button from there
+/*
     if (document.getElementById('api-intro').style.display === 'block') {
         console.log("Exiting app");
         navigator.app.exitApp();
@@ -33,6 +34,12 @@ function onBackbutton() {
         document.getElementById('api-intro').style.display = 'block';
         scroll(0,0);
     }
+*/
+	//if page is not main, then go back in history, else exit the app!
+	if($.mobile.activePage.attr('id') != 'main')
+		 navigator.app.backHistory();
+	else
+		navigator.app.exitApp();
 }
 
 //global db connection variable
@@ -172,7 +179,7 @@ function init() {
     	$("label.error").text("");
     });
     
-    //pageshow Event for Adding a TODO Dialog
+    //pageshow Event for adding a TODO Dialog
     $("#add-dialog-item").live('pageshow',function() {
     	$("#add-text").val('');
     });
@@ -204,9 +211,49 @@ function init() {
         }
     });
     
-  //everytime the input field gets focus, remove previous errors
+    //everytime the input field gets focus, remove previous errors
     $('input#add-item').focus(function() {
     	$("label.error").text("");
+    });
+    
+   //Event for editing a TODO Item
+    $("#edit-item").click(function (e) {
+    	e.stopImmediatePropagation();
+        //stop default action every time
+        e.preventDefault();
+        $("#edit-item").removeClass("ui-btn-active");
+        
+		var todoId = $("#edit-item").closest('div[data-role="content"]').attr('id');
+		console.log("Id to edit " + todoId);
+        var text = $("#edit-text").val();
+        
+        if(text == '') {
+            // No text entered (empty string)
+             $("label.error").text("Please enter text for content!");
+             // TODO AL: adjust regex below (add special characters like ?, !, etc.)
+        } else if (text.match(/^[a-zA-Z0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
+        	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
+        	$("label.error").text("");
+        	// Entered text is valid
+        	onSuccessConfirmModifyItem(todoId, text);
+            
+        } else {
+            // Entered text is invalid (too short, too long or forbidden characters).
+            $("label.error").text("Entered text is invalid!");
+        }
+    });
+    
+    //Event for deleting a TODO Item
+    $('#delete-item').click(function (e) {
+    	e.stopImmediatePropagation();
+        //stop default action every time
+        e.preventDefault();
+    	console.log("Delete event fired!");
+    	 $("#delete-item").removeClass("ui-btn-active");
+    	 
+    	 var todoId = $("#edit-item").closest('div[data-role="content"]').attr('id');
+    	
+    	onSuccessConfirmDeleteItem(todoId);
     });
     
  /*   var showApi = function(e) {

@@ -66,12 +66,12 @@ function onSuccessManipulate()
    document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
+/*
 function onSuccessUpdateDOM() 
 {
 	console.log("Success manipulating DB");
 	document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
-}
-
+} */
 
 function onSuccessConfirmNotebook(name)
 {
@@ -151,6 +151,11 @@ function onSuccessConfirmModifyItem(id, text)
 		{
 			//add item and update DOM
 			todolistModifyItemText(id, text); 
+			
+			var notebook = $("#add-item").closest('div[data-role="content"]').attr('id');
+            //we have to do this because new item won't refresh in DOM after clicking the button an returning to the main page
+            todolistGetItemsForNotebook(notebook);
+			
 			//change to main page
 			$.mobile.changePage("#main", {
 		        transition: "slide",
@@ -184,6 +189,11 @@ function onSuccessConfirmDeleteItem(id)
 		{
 			//delete item and update DOM
 			todolistDeleteItemFromDB(id); 
+			
+			var notebook = $("#add-item").closest('div[data-role="content"]').attr('id');
+			//we have to do this because new item won't refresh in DOM after clicking the button an returning to the main page
+            todolistGetItemsForNotebook(notebook);
+            
 			//change to main page
 			$.mobile.changePage("#main", {
 		        transition: "slide",
@@ -365,20 +375,20 @@ function onSuccessSelectItems(tx, results)
     	// Remark: if 'results.rows.item(i).title' is null, then it's a placeholder item for a notebook and could be ignored
     	if (results.rows.item(i).noteText != null)
     	{
-    		/*
-	    	resultString += " [ Row " + i +
-		        //", ResultObject = " + results.rows.item(i) +
-		        ", ID (Timestamp) = " + results.rows.item(i).id +
-		        ", Notebook = " + results.rows.item(i).notebook +
-		        ", NoteText = " + results.rows.item(i).noteText +
-		        ", Finished = " + results.rows.item(i).finished +
-		        " ] <br/>";
-		     */
+    		var checked = '';
+    		if(results.rows.item(i).finished)
+    			checked = 'checked="checked"';
+    		
+    		//Attention: Please keep container (in this case <p>) for each item
+    		// we need that for getting the text for edit!
 		     resultString += 
-		     	'<input type="checkbox" name="checkbox" id="checkbox-2a">' +
+		     	'<p><input type="checkbox" name="checkbox" id="' + 
+		     	results.rows.item(i).id + '" ' + checked + '>' +
 		     	'<label for="checkbox">' +
 		     	results.rows.item(i).noteText +
-		     	'</label><br/>';
+		     	'</label>&nbsp;&nbsp;&nbsp;' + 
+		     	'<a href="#" id="Item_' + results.rows.item(i).id +
+		     	'" rel="external">EDIT</a></p>';
 		 }
     }
     resultString += "</fieldset>";
@@ -391,6 +401,32 @@ function onSuccessSelectItems(tx, results)
     
     //adding id to content, we need the notebook name afterwards (a bit dirty)
     $("#add-dialog-item").find('div[data-role="content"]').attr('id', notebookName);
+    
+    //here we add an event to TODO-item checkboxes
+    $('input[name="checkbox"]').click(function(e) {
+    	if ($(this).is(":checked")) {
+    		todolistModifyItemFinished($(this).attr('id'), 1);
+    	} else {
+    		todolistModifyItemFinished($(this).attr('id'), 0);
+    	}
+    });
+    
+    //here we add an event for EDIT button
+    $('a[id^="Item_"]').click( function(e) {
+    	//extract id from item with split
+        var todoId = $(this).attr('id').split("_")[1];
+        //extract text from item
+        var todoText = $(this).siblings('label[for="checkbox"]').text();
+        
+    	console.log("Current Id= " + todoId);
+    	console.log("Current Text=" + todoText);
+    	$("#edit-dialog-item").find('input[name="name"]').val(todoText);
+    	
+        //adding id to content, we need the todo id afterwards (a bit dirty)
+        $("#edit-dialog-item").find('div[data-role="content"]').attr('id', todoId);
+        	
+    	$.mobile.changePage("#edit-dialog-item", { transition: "slide"});	
+    });
 }
 
 //creation of accordion items: http://jquerymobile.com/demos/1.2.1/docs/content/content-collapsible-set.html
@@ -414,7 +450,6 @@ function onSuccessSelectLists(tx, results)
     }
     
     $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
-    
 }
 
 //Event-listener for expand
