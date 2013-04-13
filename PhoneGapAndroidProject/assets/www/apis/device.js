@@ -124,6 +124,8 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     	//remove content of dialog inputs
     	$("input#add-name").val('');
     	$("input#add-text").val('');
+    	//remove errors from label
+    	$("label.error").text("");
     	
     	//testing scrolling to expanded list:
 		//console.log("TESTING SCROLL: " + $('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
