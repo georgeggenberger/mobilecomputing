@@ -20,21 +20,6 @@
 function onBackbutton() {
 	console.log("onBackButton entered");
 	
-    // the intro div is considered home, so exit if user
-    // wants to go back with button from there
-/*
-    if (document.getElementById('api-intro').style.display === 'block') {
-        console.log("Exiting app");
-        navigator.app.exitApp();
-    } else {    
-        var divs = document.getElementsByClassName('api-div');   
-        for(var i=0; i<divs.length; i++) { 
-            divs[i].style.display='none';
-        }
-        document.getElementById('api-intro').style.display = 'block';
-        scroll(0,0);
-    }
-*/
 	//if page is not main, then go back in history, else exit the app!
 	if($.mobile.activePage.attr('id') != 'main')
 		 navigator.app.backHistory();
@@ -119,12 +104,13 @@ var onDeviceReady = function() {
         console.log("init: get all notebooks");
         todolistGetAllNotebooks();
     }
-    
-    // TODO document.bind pageinit, maybe necessary because of timing
 };
 
-function init() {
-    console.log("entered init");
+//init() replaced by JQM event (TODO test this on real device)
+//This section is loaded at the pages
+$(document).on('pageinit', 'div:jqmData(role="page")', function(e) { 
+    console.log("entered init for pages");
+    
     document.addEventListener("deviceready", onDeviceReady, true);
 
     document.getElementById('api-intro').style.display = 'block';
@@ -132,21 +118,24 @@ function init() {
     $("[data-role=header]").fixedtoolbar({ tapToggle: false });
     $("[data-role=footer]").fixedtoolbar({ tapToggle: false });
     
-    console.log("registering add-item click event");
-    
     //pageshow Event for the Main Page
     $("#main").live('pageshow', function () {
+    	
+    	//remove content of dialog inputs
+    	$("input#add-name").val('');
+    	$("input#add-text").val('');
+    	
     	//testing scrolling to expanded list:
-		console.log("TESTING SCROLL: " + $('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
-		
+		//console.log("TESTING SCROLL: " + $('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
+    	
 		//scroll to expanded accordion item
 		$.mobile.silentScroll($('div[class^="ui-collapsible"]:not(.ui-collapsible-collapsed)').offset().top);
     });
     
     //pageshow Event for Adding List Dialog
-    $("#add-dialog-list").live('pageshow',function() {
-    	$("#add-name").val('');
-    });
+    //$("#add-dialog-list").live('pageshow',function() {
+    	
+    //});
     
     //Event for Adding a List
     $("#add-list").click(function (e) {
@@ -162,27 +151,18 @@ function init() {
              $("label.error").text("Please enter a name!");
         } else if (addName.match(/^[a-zA-Z0-9\s\.]{3,100}$/)) { // Matches alphanumeric characters, space and .
         	$("label.error").text("");
-        	// Entered text is valid
-            onSuccessConfirmNotebook(addName);
+        	// Entered text is valid, interaction function is called
+            confirmAddNotebook(addName);
         } else {
             // Entered text is invalid (too short, too long or forbidden characters).
             $("label.error").text("Entered text is invalid!");
         }
     });
     
-    $("#add-cancel").click(function (e) {
-    	$("label.error").text("");
-    });
-    
-    //everytime the input field gets focus, remove previous errors
-    $('input#add-name').focus(function() {
-    	$("label.error").text("");
-    });
-    
     //pageshow Event for adding a TODO Dialog
-    $("#add-dialog-item").live('pageshow',function() {
-    	$("#add-text").val('');
-    });
+    //$("#add-dialog-item").live('pageshow',function() {
+    	
+    //});
     
     //Event for adding a TODO Item
     $("#add-item").click(function (e) {
@@ -202,8 +182,8 @@ function init() {
         } else if (text.match(/^[a-zA-Z0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
         	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
         	$("label.error").text("");
-        	// Entered text is valid
-            onSuccessConfirmAddItem(notebook, text);
+        	// Entered text is valid, interaction function is called
+            confirmAddItem(notebook, text);
             
         } else {
             // Entered text is invalid (too short, too long or forbidden characters).
@@ -211,12 +191,7 @@ function init() {
         }
     });
     
-    //everytime the input field gets focus, remove previous errors
-    $('input#add-item').focus(function() {
-    	$("label.error").text("");
-    });
-    
-   //Event for editing a TODO Item
+    //Event for editing a TODO Item
     $("#edit-item").click(function (e) {
     	e.stopImmediatePropagation();
         //stop default action every time
@@ -235,7 +210,7 @@ function init() {
         	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
         	$("label.error").text("");
         	// Entered text is valid
-        	onSuccessConfirmModifyItem(todoId, text);
+        	confirmModifyItem(todoId, text);
             
         } else {
             // Entered text is invalid (too short, too long or forbidden characters).
@@ -249,41 +224,26 @@ function init() {
         //stop default action every time
         e.preventDefault();
     	console.log("Delete event fired!");
-    	 $("#delete-item").removeClass("ui-btn-active");
+    	$("#delete-item").removeClass("ui-btn-active");
     	 
-    	 var todoId = $("#edit-item").closest('div[data-role="content"]').attr('id');
+    	var todoId = $("#edit-item").closest('div[data-role="content"]').attr('id');
     	
-    	onSuccessConfirmDeleteItem(todoId);
+    	confirmDeleteItem(todoId);
     });
-    
- /*   var showApi = function(e) {
-        var apiId = this.id;
-        var divs = document.getElementsByClassName('api-div');   
-        for(var j=0; j<divs.length; j++) { 
-            divs[j].style.display='none';
-        }
-        var apiEl = document.getElementById('api-' + apiId);
-        apiEl.style.display = 'block';
-        scroll(0,0);
-    };
-    // add click to each api name / div
-    var apiList = document.getElementById('sidebar').getElementsByTagName('a');
-    for(var i=0; i< apiList.length; i++) { 
-        apiList[i].addEventListener('click', showApi, false);
-    }
+});
 
-    var $select = document.getElementById('subheader').getElementsByTagName('select')[0];
-    if ($select) {
-        $select.addEventListener('change', function(e) {
-            var api = this.options[this.selectedIndex].value;
-            //alert("value: " + api);
-            
-            var divs = document.getElementsByClassName('api-div');   
-            for(var j=0; j<divs.length; j++) { 
-                divs[j].style.display='none';
-            }
-            document.getElementById('api-' + api).style.display = 'block';
-            
-        }, false);
-    } else { alert("no select here"); } */
-}
+//init() replaced by JQM event (TODO test this on real device)
+//This section is loaded at the dialogs
+$(document).on('pageinit', 'div:jqmData(role="dialog")', function(e) { 
+    console.log("entered init for dialogs");
+    
+	//Everytime the dialog is cancelled, empty error label
+	$("#add-cancel").click(function (e) {
+		$("label.error").text("");
+	});
+	
+	//Everytime the input fields get focus, remove previous errors
+	$('input#add-name, input#add-text, input#edit-text').focus(function() {
+		$("label.error").text("");
+	});
+});

@@ -25,7 +25,7 @@
 // todolistGetItemsForNotebook(notebook)
 //		Writes all items from given notebook into the 'todo-sql-result' HTML element
 
-
+//Initial DB creation
 function onCreateDB(tx)
 {
 	// UTC timestamp is used for ID
@@ -38,6 +38,7 @@ function onDropDB(tx)
     tx.executeSql('DROP TABLE IF EXISTS TODOLIST');
 }
 
+//JUST FOR TESTING PURPOSES
 function todolistDropDB()
 {
     db.transaction(onDropDB, onError, onSuccessManipulate);    
@@ -46,7 +47,11 @@ function todolistDropDB()
 //DEMO-FUNCTION
 function onPopulateDB(tx)
 {
-    tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime() + ', "List 1", "This is a demo text 1", 0)');
+//    //CREATE Notebook Items
+	tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime()+10 + ', "List 1", null, null)');
+	tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime()+20 + ', "List 2", null, null)');
+	tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime()+30 + ', "List 3", null, null)');
+//	//JUST FOR TESTING INSERT ITEMS
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+1) + ', "List 1", "This is a demo text 2", 1)');
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+2) + ', "List 2", "This is yet another demo text", 0)');
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + (new Date().getTime()+3) + ', "List 2", "This is a demo text 3", 1)');
@@ -54,16 +59,17 @@ function onPopulateDB(tx)
     tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (12345, "List 1", "This is a demo text with hardcoded ID", 0)');
 }
 
+//Basic error functions
 function onError(err)
 {
    console.log("Error processing SQL statement, Error=" + err.code + ", Msg: " + err.message);
-   document.getElementById('todo-sql-result').innerHTML = "<strong>Error processing SQL statement: " + err.code + "</strong>";
+   //document.getElementById('todo-sql-result').innerHTML = "<strong>Error processing SQL statement: " + err.code + "</strong>";
 }
 
 function onSuccessManipulate()
 {
    console.log("Success manipulating DB");
-   document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
+   //document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 }
 
 /*
@@ -73,19 +79,19 @@ function onSuccessUpdateDOM()
 	document.getElementById('todo-sql-result').innerHTML = "<strong>Success manipulating DB</strong>";
 } */
 
-function onSuccessConfirmNotebook(name)
+//-------------------------------------------------------------------------------------------------------------------
+//UI INTERACTION FUNCTIONS
+function confirmAddNotebook(name)
 {
 	var onSuccessCheck = function (tx, results)
 	{
 		if (results.rows.length > 0)
 		{
-			console.log("Notebook found! " + name);
+			console.log("Notebook=" + name + " found!");
 			//put error in dialog
 			$("label.error").text("Name already exists!");
 			//$("input#add-name").val('');
-		}
-		else
-		{
+		} else {
 			//add notebook and update DOM
 			todolistAddNotebook(name); 
 			//change to main page
@@ -106,26 +112,27 @@ function onSuccessConfirmNotebook(name)
 	//document.getElementById('todo-sql-result').innerHTML = "<strong>Input from Dialog received: " + name + "</strong>";
 }
 
-function onSuccessConfirmAddItem(notebook, text)
+function confirmAddItem(notebook, text)
 {
-	console.log("Add item to Notebook=" + notebook + ", Text:" + text);
+	console.log("Add item to Notebook=" + notebook + ", text=" + text);
 
 	var onSuccessCheck = function (tx, results)
 	{
 		if (results.rows.length > 0)
 		{
-			// add item to notebook and update DOM
+			//add item to notebook and update DOM
 			todolistAddItemToDB(notebook, text, 0); 
+			
             //we have to do this because new item won't show up in DOM after clicking the button an returning to the main page
             todolistGetItemsForNotebook(notebook);
+            
 			//change to main page
 			$.mobile.changePage("#main", {
 		        transition: "slide",
 		        reverse: true
 		    });
-		}
-		else {
-			console.log("Notebook not found: " + notebook);
+		} else {
+			console.log("Notebook=" + notebook + " not found!");
 			//put error in dialog
 			$("label.error").text("Notebook doesn't exist!");
 		}
@@ -141,9 +148,9 @@ function onSuccessConfirmAddItem(notebook, text)
 	//document.getElementById('todo-sql-result').innerHTML = "<strong>Add item to notebook " + notebook + ", Text: " + text + "</strong>";
 }
 
-function onSuccessConfirmModifyItem(id, text)
+function confirmModifyItem(id, text)
 {
-	console.log("Modify item with id=" + id + ", Text:" + text);
+	console.log("Modify item with id=" + id + ", text=" + text);
 	
 	var onSuccessCheck = function (tx, results)
 	{
@@ -161,9 +168,7 @@ function onSuccessConfirmModifyItem(id, text)
 		        transition: "slide",
 		        reverse: true
 		    });
-		}
-		else
-		{
+		} else {
 			// if id doesn't exists -> show error 
 			$("label.error").text("Item with ID doesn't exist!");
 		}
@@ -179,7 +184,7 @@ function onSuccessConfirmModifyItem(id, text)
 	//document.getElementById('todo-sql-result').innerHTML = "<strong>Modify item with id=" + id + ", Text: " + text + "</strong>";
 }
 
-function onSuccessConfirmDeleteItem(id)
+function confirmDeleteItem(id)
 {
 	console.log("Delete item with id=" + id);
 	
@@ -191,6 +196,8 @@ function onSuccessConfirmDeleteItem(id)
 			todolistDeleteItemFromDB(id); 
 			
 			var notebook = $("#add-item").closest('div[data-role="content"]').attr('id');
+			
+			console.log("Delete and get items for Notebook=" + notebook )
 			//we have to do this because new item won't refresh in DOM after clicking the button an returning to the main page
             todolistGetItemsForNotebook(notebook);
             
@@ -199,9 +206,7 @@ function onSuccessConfirmDeleteItem(id)
 		        transition: "slide",
 		        reverse: true
 		    });
-		}
-		else
-		{
+		} else {
 			// if id doesn't exists -> show error 
 			$("label.error").text("Item with ID doesn't exist!");
 		}
@@ -273,10 +278,7 @@ function todolistDeleteItemFromDB(id)
 function todolistAddNotebook(notebook)
 {
 	var onAddNotebook = function(tx)
-	{
-		// TODO we need to check if the name is already taken, we must not have same names here!
-		// either exiting here or after input validation
-		
+	{		
 		tx.executeSql('INSERT INTO TODOLIST (id, notebook, noteText, finished) VALUES (' + new Date().getTime() + ', "' + notebook + '", null, null)');
 	};
 	
@@ -295,8 +297,8 @@ function todolistAddNotebook(notebook)
 	    $("div[data-role='collapsible-set']").find('div[data-role=collapsible]').collapsible();  
 	    $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
 		
-		console.log("Notebook: " + notebook + " added!");
-	    document.getElementById('todo-sql-result').innerHTML = "<strong>Notebook: " + notebook + " added!</strong>";
+		console.log("Notebook=" + notebook + " added!");
+	    //document.getElementById('todo-sql-result').innerHTML = "<strong>Notebook: " + notebook + " added!</strong>";
 	    
 	};
 	
@@ -305,15 +307,6 @@ function todolistAddNotebook(notebook)
 
 //-------------------------------------------------------------------------------------------------------------------
 //DATABASE FUNCTIONS -- GETTER
-function todolistGetAllItems()
-{
-	var onQueryAllItems = function(tx)
-	{
-	    tx.executeSql('SELECT * FROM TODOLIST WHERE noteText IS NOT NULL ORDER BY id DESC', [], onSuccessSelect, onError);
-	};
-
-  db.transaction(onQueryAllItems, onError);    
-}
 
 function todolistGetAllNotebooks()
 {
@@ -338,31 +331,11 @@ function todolistGetItemsForNotebook(notebook)
 
 //-------------------------------------------------------------------------------------------------------------------
 //EVENT FUNCTIONS
-function onSuccessSelect(tx, results)
-{
-    console.log("Num. Rows Returned = " + results.rows.length);
-    var resultString = "<strong>Rows Returned = " + results.rows.length + "</strong><br/>";
-    for (var i = 0; i < results.rows.length; i++)
-    {
-    	if (results.rows.item(i).noteText != null)
-    	{
-	    	resultString = resultString +
-	    		" [ Row " + i +
-		        //", ResultObject = " + results.rows.item(i) +
-		        ", ID (Timestamp) = " + results.rows.item(i).id +
-		        ", Notebook = " + results.rows.item(i).notebook +
-		        ", NoteText = " + results.rows.item(i).noteText +
-		        ", Finished = " + results.rows.item(i).finished +
-		        " ]<br/>";
-	    }
-    }
-    document.getElementById('todo-sql-result').innerHTML = resultString;
-}
 
 //creating of accordion content of expanded item dynamically
 function onSuccessSelectItems(tx, results)
 {
-    console.log("Items - Num. Rows Returned = " + results.rows.length);
+    console.log("Items returned=" + results.rows.length);
     
     var notebookName = results.rows.item(0).notebook;
     
@@ -452,15 +425,18 @@ function onSuccessSelectLists(tx, results)
     $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
 }
 
-//Event-listener for expand
+//-------------------------------------------------------------------------------------------------------------------
+//Event-listener for expanding Notebook
+//=> used in todolistAddNotebook
+//=> used in onSucessSelectLists
 function bindListEvent(notebook)
 {
 	//BOTH EVENTS are working
 	$("div[id='" + notebook + "']").bind('expand', function () {
 	//$("div[id='" + notebook + "']").bind('tap taphold swipe swiperight swipeleft', function(event, ui) {
 		
-		console.log("Event Content = " + notebook);
+		console.log("Event expand Notebook=" + notebook);
 			
 		todolistGetItemsForNotebook(notebook);
-	 });
+	});
 }

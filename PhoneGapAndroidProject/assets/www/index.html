@@ -21,7 +21,7 @@
 	<script type="text/javascript" charset="utf-8" src="todolist.js"></script>
   </head>
   
-  <body onload="init();">
+  <body>
   <div data-role="page" id="main">
 	<div data-role="header" id="header" >
 		<h1>TODO-List</h1>
@@ -29,79 +29,18 @@
 	<div id="scrollable">
      <div id="content" data-role="content">                
 		    <div class="api-div" id="api-intro">
-				<!-- AL: TodoList API test starts here -->
-				<!-- <h4>TODO-List playground starts here!</h4> -->
-				<!--  <a data-role="button"  onclick="todolistCreateDB();">Create DB</a> 
-					<a data-role="button"  onclick="todolistDropDB();">Drop DB</a> -->
-					<!-- 
-					<a data-role="button" data-corners="false" onclick="todolistPopulateDB();">Add example entries to DB</a>
-					<a data-role="button" data-corners="false" onclick="todolistAddItemToDB('List 1', 'Text of another entry', 0);">Add entry to DB</a>
-					<a data-role="button" data-corners="false" onclick="todolistModifyItemText(12345, 'Modified Text');">Modify text of entry</a>
-					<a data-role="button" data-corners="false" onclick="todolistModifyItemFinished(12345, 1);">Modify finished state of entry</a>
-					<a data-role="button" data-corners="false" onclick="todolistDeleteItemFromDB(12345);">Delete entry from DB</a>
-					<a data-role="button" data-corners="false" onclick="todolistGetAllItems();">Get all items</a>
-					<a data-role="button" data-corners="false" onclick="todolistGetAllNotebooks();">Get all notebooks</a>
-					-->
-					<!-- FL: already implemented in the expand event -->
-					<!--  <a data-role="button" data-icon="arrow-d" data-iconpos="right" data-corners="false" onclick="todolistGetItemsForNotebook('List 1');">Get resultset for List 1</a> -->
-					<!-- FL: already implemented in the dialog below -->
-					<!-- <a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" onclick="todolistAddNotebook('New List');">Add List</a> -->
-					<!--  FL: Dialog for adding List -->
-					<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" href="#add-dialog-list" data-rel="dialog" data-transition="slide">Add TODO-List</a>
-					<!--  FL: Dialog for adding Item 
-					<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" href="#add-dialog-item" data-rel="dialog" data-transition="slide" data-mini="true">Add TODO-Item</a> -->
+		        <!-- FT: Button for adding lists -->
+				<a data-role="button" data-corners="false" data-icon="plus" data-theme="b" data-iconpos="right" href="#add-dialog-list" data-rel="dialog" data-transition="slide">Add TODO-List</a>
 				<div class="result-block">
-					<p>SQL Result: <br/><span id="todo-sql-result"></span></p>
+					<span id="todo-sql-result"></span>
 				</div>
-				<!-- AL: ...and ends here -->
 				
-				<!-- FT: TodoList UI test starts here 
-		    	<h2>TODO-List</h2> -->
-		    	<blockquote>
-  					<p>UI tests for TODO-List functionality (DOM creation from Javascript).</p>
-				</blockquote>
+				<!-- FT: This is the main block for the TODO list, a collapsible set, 
+				    which will be subsequently filled by User action -->
 		    	<div id="view-block" data-role="collapsible-set" data-collapsed="true">
 				</div>
 		    	<!-- FT: ...and ends here -->				
-			</div>
-
-		    <div class="api-div" id="api-events">
-				<h2>Events</h2>
-				<blockquote>
-					<p>PhoneGap lifecycle events.</p>
-				</blockquote>
-				<h4 class="help">Tap device (or virtual device) <code>menu</code> or <code>search</code> buttons to see example callback output.</h4>
-				<span id="eventOutput"></span>
-				<h4>Other event example callbacks use console.log</h4>								
-			</div>
-
-		    <div class="api-div" id="api-geolocation">
-				<h2>Geolocation</h2>
-				<blockquote>
-  					<p>The <code>geolocation</code> object provides access to the device's GPS sensor.</p>
-				</blockquote>
-				<h4 class="help"><b>Toggle</b> to stop/start
-				geolocation watch. <br/><b>Get Current</b> for one-time geolocation reading.</h4>
-				<a data-role="button"  onclick="toggleWatchPosition();">Toggle</a>
-   				<a data-role="button"  onclick="getCurrentPosition();">Get Current</a>
-   				<div class="result-block">
-   					<span id="cur_position"></span>
-   				</div>
-   				<img id="map" alt="Location Map"/>								
-			</div>
-
-		    <div class="api-div" id="api-notification">
-				<h2>Notification</h2>
-				<blockquote>
-  					<p>Visual, audible, and tactile device notifications.</p>
-				</blockquote>
-				<div class="result-block">
-					<a data-role="button"  onclick="showAlert();">Alert</a>
-					<a data-role="button"  onclick="showConfirm();">Confirm</a></div>
-				<div class="result-block">  
-					<a data-role="button"  onclick="beep();" >Beep</a>
-					<a data-role="button"  onclick="vibrate();" >Vibrate</a></div>  
-			</div>
+			</div> <!-- api-div -->
       </div> <!-- /content -->
       
     </div>	<!-- /scrollable -->
@@ -154,7 +93,7 @@
 			<h1>Edit TODO Item</h1>
 		</div>
 		<div data-role="content">	
-   			<p><input type="text" name="name" id="edit-text" data-corners="false" value="" placeholder="Enter Content" />
+   			<p><input type="text" name="name" id="edit-text" data-corners="false" value=""/>
    			<!-- error label for validation -->
    			<label class='error'></label>
    			</p>
@@ -169,15 +108,15 @@
 <!-- Dialog Edit Item End -->
 
 	<!--  	<script type="text/javascript" charset="utf-8" src="index.js"></script> -->
-	<!--  This inclusion is needed when we use the init() event! -->
 	<!-- These javascript files are needed for Device interaction -->
-	<script type="text/javascript" charset="utf-8" src="apis/device.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/events.js"></script>
+	<!--  This inclusion is needed, it contains the deviceready event from Phonegap as well 
+	as the pageinit events from JQM -->
+	<script type="text/javascript" charset="utf-8" src="apis/device.js"></script>
 	
 	<!-- AL: These files will be before release, if not needed -->
 	<script type="text/javascript" charset="utf-8" src="apis/geolocation.js"></script>
 	<script type="text/javascript" charset="utf-8" src="apis/notification.js"></script>
-	<script type="text/javascript" charset="utf-8" src="apis/storage.js"></script>
 	
 	<!-- FL: added remote weinre javascript debugging support: 
     After start of app in emulator open this page in your host's browser: http://debug.phonegap.com/client/#mco-debugger -->
