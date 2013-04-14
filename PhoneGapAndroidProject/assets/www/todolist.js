@@ -355,13 +355,18 @@ function onSuccessSelectItems(tx, results)
     		//Attention: Please keep container (in this case <p>) for each item
     		// we need that for getting the text for edit!
 		     resultString += 
-		     	'<p><input type="checkbox" name="checkbox" id="' + 
+		     	'<p class="todo-item">' + 
+		     	'<input type="checkbox" name="checkbox" id="' + 
 		     	results.rows.item(i).id + '" ' + checked + '>' +
 		     	'<label for="checkbox">' +
 		     	results.rows.item(i).noteText +
-		     	'</label>&nbsp;&nbsp;&nbsp;' + 
+		     	'</label>' + 
+		     	'<a href="#" data-role="button" data-icon="edit" data-iconpos="notext" class="check-icon" id="Item_' + results.rows.item(i).id +
+		     	'" rel="external">EDIT</a></p>';
+		     	/*
 		     	'<a href="#" id="Item_' + results.rows.item(i).id +
 		     	'" rel="external">EDIT</a></p>';
+		     	*/
 		 }
     }
     resultString += "</fieldset>";
