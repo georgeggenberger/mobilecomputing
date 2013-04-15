@@ -18,6 +18,8 @@
 //		Deletes the item with the according 'id' from the DB
 // todolistAddNotebook(notebook):
 //		Adds an empty notebook to the DB
+// todolistDeleteNotebook(notebook):
+//		Deletes a notebook with all entries
 // todolistGetAllItems:
 //		Loops through all items in the database and writes the result to the 'todo-sql-result' HTML element
 // todolistGetAllNotebooks:
@@ -303,6 +305,16 @@ function todolistAddNotebook(notebook)
 	};
 	
 	db.transaction(onAddNotebook, onError, onSuccessUpdate);
+}
+
+function todolistDeleteNotebook(notebook)
+{
+	var onDeleteNotebook = function(tx)
+	{
+		tx.executeSql('DELETE FROM TODOLIST WHERE notebook="' + notebook + '", null, null)');
+	};
+	
+    db.transaction(onDeleteItem, onError, onSuccessManipulate);    
 }
 
 //-------------------------------------------------------------------------------------------------------------------
