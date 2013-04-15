@@ -1,4 +1,4 @@
-package com.example.phonegaptest;
+package at.tell.todolist;
 
 import org.apache.cordova.DroidGap;
 
