@@ -309,12 +309,20 @@ function todolistAddNotebook(notebook)
 
 function todolistDeleteNotebook(notebook)
 {
+	var onSuccessUpdate = function(tx)
+	{
+		console.log("Noteboook " + notebook + " deleted!");
+		//removing the notebook from DOM
+		$("div[id='" + notebook + "']").remove();
+		$("div[data-role='collapsible-set']").collapsibleset('refresh'); 
+	}
+	
 	var onDeleteNotebook = function(tx)
 	{
-		tx.executeSql('DELETE FROM TODOLIST WHERE notebook="' + notebook + '", null, null)');
+		tx.executeSql('DELETE FROM TODOLIST WHERE notebook="' + notebook + '"');
 	};
 	
-    db.transaction(onDeleteItem, onError, onSuccessManipulate);    
+    db.transaction(onDeleteNotebook, onError, onSuccessUpdate);    
 }
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -384,6 +392,9 @@ function onSuccessSelectItems(tx, results)
     resultString += "</fieldset>";
     resultString += "<a data-role='button' data-corners='false' data-icon='plus' data-theme='b' data-iconpos='right' " + 
 	"href='#add-dialog-item' data-rel='dialog' data-transition='slide' data-mini='true'>Add TODO-Item</a>";
+    /* button for delete List */
+    resultString += "<p><a data-role='button' data-corners='false' data-icon='minus' data-theme='e' data-iconpos='right' " + 
+	"href='#' data-transition='flip' data-mini='true' id='delete-list'>Delete " + notebookName + "</a><p>";
     
     $("div[id='" + notebookName + "']").find('div[class="ui-collapsible-content"]').append(resultString);
     $("div[id='" + notebookName + "']").find('a[data-role="button"]').button();
@@ -416,6 +427,21 @@ function onSuccessSelectItems(tx, results)
         $("#edit-dialog-item").find('div[data-role="content"]').attr('id', todoId);
         	
     	$.mobile.changePage("#edit-dialog-item", { transition: "slide"});	
+    });
+    
+    //Event for Deleting a List
+    $("#delete-list").click(function(e){
+    	e.stopImmediatePropagation();
+        //stop default action every time
+        e.preventDefault();
+    	console.log("Delete event fired!");
+    	$(this).removeClass("ui-btn-active");
+    	
+    	//see callback function in device.js
+    	areYouSure(function() {
+    		todolistDeleteNotebook(notebookName);
+    	});
+    	
     });
 }
 
