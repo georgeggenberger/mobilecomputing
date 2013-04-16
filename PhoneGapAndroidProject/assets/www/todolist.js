@@ -297,6 +297,7 @@ function todolistAddNotebook(notebook)
     	bindListEvent(notebook);
     	
 	    $("div[data-role='collapsible-set']").find('div[data-role=collapsible]').collapsible();  
+	    $("div[id='"+ notebook + "']").trigger('expand');
 	    $("div[data-role='collapsible-set']").collapsibleset('refresh'); 
 		
 		console.log("Notebook=" + notebook + " added!");
