@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Mobile Developer Solutions. All rights reserved.
+﻿/* Copyright (c) 2012 Mobile Developer Solutions. All rights reserved.
  * This software is available under the MIT License:
  * The MIT License
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
@@ -151,7 +151,7 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
         if(addName == '') {
             // No text entered (empty string)
              $("label.error").text("Please enter a name!");
-        } else if (addName.match(/^[a-zA-Z0-9\s\.]{3,100}$/)) { // Matches alphanumeric characters, space and .
+        } else if (addName.match(/^[a-zA-ZäöüßÄÖÜ0-9\s\.]{3,100}$/)) { // Matches alphanumeric characters, space and .
         	$("label.error").text("");
         	// Entered text is valid, interaction function is called
             confirmAddNotebook(addName);
@@ -181,7 +181,7 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
             // No text entered (empty string)
              $("label.error").text("Please enter text for content!");
              // TODO AL: adjust regex below (add special characters like ?, !, etc.)
-        } else if (text.match(/^[a-zA-Z0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
+        } else if (text.match(/^[a-zA-ZäöüßÄÖÜ0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
         	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
         	$("label.error").text("");
         	// Entered text is valid, interaction function is called
@@ -208,7 +208,7 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
             // No text entered (empty string)
              $("label.error").text("Please enter text for content!");
              // TODO AL: adjust regex below (add special characters like ?, !, etc.)
-        } else if (text.match(/^[a-zA-Z0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
+        } else if (text.match(/^[a-zA-ZäöüßÄÖÜ0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
         	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
         	$("label.error").text("");
         	// Entered text is valid
