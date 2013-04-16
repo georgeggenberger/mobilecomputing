@@ -44,8 +44,33 @@ label.error {
     margin-left: 22%;
 }
 
-#add-dialog-list {background: #fff !important;}
-#add-dialog-list .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
+/* header definition for dialogs (must be different to page header) */
+#dialog-header {
+    background-color: #515151;
+	background: #515151
+    -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #515151),
+    color-stop(0.8, #302F2D) );
+	border-top: 1px solid #919192;
+	height: 32px;
+	left: 0px;
+	top: 15px;
+	width: 100%;
+	z-index: 1;
+}
+
+#dialog-header h1 {
+	color: #F6F4F2;
+	font-size: 1.2em;
+	font-weight: normal;
+	line-height: 32px;
+	margin: 0px;
+	text-align: center;
+	text-shadow: 0px -1px 1px #222222;
+}
+
+/* Dialog design changes */
+#add-dialog-list{background: #fff !important;}
+#add-dialog-list .ui-corner-all{border-radius: 0; margin: 0; max-width: inherit;}
 #add-dialog-list #add-name{font-size: 22px; color: #666;}
 
 #add-dialog-list .ui-overlay-shadow{box-shadow: none;}
@@ -53,18 +78,20 @@ label.error {
 
 #add-dialog-list .ui-dialog-contain{width: 100%;}
 
+
 #add-dialog-item {background: #fff !important;}
-#add-dialog-item .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
-#add-dialog-item #add-name{font-size: 22px; color: #666;}
+#add-dialog-item .ui-corner-all{border-radius: 0; margin: 0; max-width: inherit;} */
+#add-dialog-item #add-text{font-size: 22px; color: #666;}
 
 #add-dialog-item .ui-overlay-shadow{box-shadow: none;}
 #add-dialog-item .ui-content{background: none;}
 
 #add-dialog-item .ui-dialog-contain{width: 100%;}
 
+
 #edit-dialog-item {background: #fff !important;}
-#edit-dialog-item .ui-corner-all{border-radius: 0; margin: 35px 0 0 0; max-width: inherit;}
-#add-dialog-item #add-name{font-size: 22px; color: #666;}
+#edit-dialog-item .ui-corner-all{border-radius: 0; margin: 0; max-width: inherit;}
+#edit-dialog-item #edit-text{font-size: 22px; color: #666;}
 
 #edit-dialog-item .ui-overlay-shadow{box-shadow: none;}
 #edit-dialog-item .ui-content{background: none;}
