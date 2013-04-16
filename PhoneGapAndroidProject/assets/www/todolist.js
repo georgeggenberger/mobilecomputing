@@ -372,12 +372,20 @@ function onSuccessSelectItems(tx, results)
     		if(results.rows.item(i).finished)
     			checked = 'checked="checked"';
     		
+    		var idDate = new Date(results.rows.item(i).id);
+    		var datePrefix = idDate.toLocaleDateString();
+    		if (datePrefix == new Date().toLocaleDateString()) // if note was created today
+    		{
+    			datePrefix = idDate.toLocaleTimeString();
+    		}
+    		
     		//Attention: Please keep container (in this case <p>) for each item
     		// we need that for getting the text for edit!
 		     resultString += 
 		     	'<p class="todo-item">' + 
 		     	'<input type="checkbox" name="checkbox" id="' + 
 		     	results.rows.item(i).id + '" ' + checked + '>' +
+		     	'<span>' + datePrefix + ' </span>' +
 		     	'<label for="checkbox">' +
 		     	results.rows.item(i).noteText +
 		     	'</label>' + 
