@@ -25,6 +25,7 @@
 
 .check-icon{float: right; margin-right: 4px;}
 .todo-item{padding: 5px 7px;}
+.todo-item span{font-size: 16px; color: #396B9E}
 .todo-item label{font-size: 16px;}
 .todo-item input{background: #fff; border: 1px solid #666;}
 
