@@ -27,6 +27,15 @@ function onBackbutton() {
 		navigator.app.exitApp();
 }
 
+//Confirm Dialog (very cool callback)
+function areYouSure(callback) {
+	  $("#sure .sure-do").unbind("click.sure").on("click.sure", function() {
+	    callback();
+	    $(this).off("click.sure");
+	  });
+	  $.mobile.changePage("#sure", { transition: "flip" });
+}
+
 //global db connection variable
 var db = 0;
 
@@ -230,7 +239,9 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     	 
     	var todoId = $("#edit-item").closest('div[data-role="content"]').attr('id');
     	
-    	confirmDeleteItem(todoId);
+    	areYouSure(function() {
+    		confirmDeleteItem(todoId);
+    	});
     });
 });
 

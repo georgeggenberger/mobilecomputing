@@ -80,7 +80,7 @@ label.error {
 
 
 #add-dialog-item {background: #fff !important;}
-#add-dialog-item .ui-corner-all{border-radius: 0; margin: 0; max-width: inherit;} */
+#add-dialog-item .ui-corner-all{border-radius: 0; margin: 0; max-width: inherit;}
 #add-dialog-item #add-text{font-size: 22px; color: #666;}
 
 #add-dialog-item .ui-overlay-shadow{box-shadow: none;}

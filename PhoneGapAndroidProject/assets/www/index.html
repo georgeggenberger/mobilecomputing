@@ -106,6 +106,17 @@
 	</div>
 <!-- Dialog Edit Item End -->
 
+<!-- Confirm Dialog -->
+	<div data-role="dialog" id="sure">
+		<div data-role="content">
+			<h3 class="sure-text">Are you sure?</h3>
+			<p><a data-role="button" data-corners="false" data-rel="back" 
+			data-theme="e" href="#" class="sure-do">Yes</a></p>
+			<p><a data-role="button" data-corners="false" data-rel="back" data-theme="b" href="#">No</a></p>
+		</div>
+	</div>
+<!-- Confirm Dialog End -->
+
 	<!-- These javascript files are needed for Device interaction -->
 	<script type="text/javascript" charset="utf-8" src="apis/events.js"></script>
 	<!--  This inclusion is needed, it contains the deviceready event from Phonegap as well 
@@ -115,7 +126,7 @@
 	<!-- FL: added remote weinre javascript debugging support: 
     After start of app in emulator open this page in your host's browser: http://debug.phonegap.com/client/#mco-debugger -->
     <!-- <script src="http://debug.phonegap.com/target/target-script-min.js#mco-debugger"></script> -->
-    <!-- <script src="http://192.168.0.13:8080/target/target-script-min.js#mco-debugger"></script> -->
+    <!-- <script src="http://192.168.0.13:8080/target/target-script-min.js#mco-debugger"></script>  -->
 
   </body>
 </html>
