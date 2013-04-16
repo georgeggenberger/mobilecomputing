@@ -98,16 +98,16 @@ var onDeviceReady = function() {
         db = window.openDatabase("Database", "1.0", "Yet another TODO-List", 500000);
         
         //only for testing purposes (whipes out old database)
-        console.log("init: drop old DB");
-        todolistDropDB();
+        //console.log("init: drop old DB");
+        //todolistDropDB();
         
         //creating table for TODO-Lists
         console.log("init: create DB");
         todolistCreateDB();
         
         //only for testing purposes (is adding items on each start)
-        console.log("init: populate DB");
-        todolistPopulateDB();
+        //console.log("init: populate DB");
+        //todolistPopulateDB();
         
         //initializes initial view of todo-items
         console.log("init: get all notebooks");
@@ -144,9 +144,9 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     });
     
     //pageshow Event for Adding List Dialog
-    //$("#add-dialog-list").live('pageshow',function() {
-    	
-    //});
+    $("#add-dialog-list").live('pageshow',function() {
+    	$("#add-name").focus();
+    });
     
     //Event for Adding a List
     $("#add-list").click(function (e) {
@@ -171,9 +171,9 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     });
     
     //pageshow Event for adding a TODO Dialog
-    //$("#add-dialog-item").live('pageshow',function() {
-    	
-    //});
+    $("#add-dialog-item").live('pageshow',function() {
+    	$("#add-text").focus();
+    });
     
     //Event for adding a TODO Item
     $("#add-item").click(function (e) {
@@ -200,6 +200,11 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
             // Entered text is invalid (too short, too long or forbidden characters).
             $("label.error").text("Entered text is invalid!");
         }
+    });
+    
+    //pageshow Event for editing a TODO Dialog
+    $("#edit-dialog-item").live('pageshow',function() {
+    	$("#edit-text").focus();
     });
     
     //Event for editing a TODO Item
