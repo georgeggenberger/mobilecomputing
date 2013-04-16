@@ -233,21 +233,6 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
             $("label.error").text("Entered text is invalid!");
         }
     });
-    
-    //Event for deleting a TODO Item
-    $('#delete-item').click(function (e) {
-    	e.stopImmediatePropagation();
-        //stop default action every time
-        e.preventDefault();
-    	console.log("Delete event fired!");
-    	$("#delete-item").removeClass("ui-btn-active");
-    	 
-    	var todoId = $("#edit-item").closest('div[data-role="content"]').attr('id');
-    	
-    	areYouSure(function() {
-    		confirmDeleteItem(todoId);
-    	});
-    });
 });
 
 //init() replaced by JQM event (TODO test this on real device)
@@ -264,4 +249,19 @@ $(document).on('pageinit', 'div:jqmData(role="dialog")', function(e) {
 	$('input#add-name, input#add-text, input#edit-text').focus(function() {
 		$("label.error").text("");
 	});
+	
+    //Event for deleting a TODO Item
+    $('#delete-item').click(function (e) {
+    	e.stopImmediatePropagation();
+        //stop default action every time
+        e.preventDefault();
+    	console.log("Delete event fired!");
+    	$("#delete-item").removeClass("ui-btn-active");
+    	 
+    	var todoId = $("#edit-item").closest('div[data-role="content"]').attr('id');
+    	
+    	areYouSure(function() {
+    		confirmDeleteItem(todoId);
+    	});
+    });
 });
