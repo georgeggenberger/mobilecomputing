@@ -427,7 +427,7 @@ function onSuccessSelectItems(tx, results)
     	//extract id from item with split
         var todoId = $(this).attr('id').split("_")[1];
         //extract text from item
-        var todoText = $(this).siblings('label[for="checkbox"]').text();
+        var todoText = $(this).siblings('span[class="label-text"]').text();
         
     	console.log("Current Id= " + todoId);
     	console.log("Current Text=" + todoText);
