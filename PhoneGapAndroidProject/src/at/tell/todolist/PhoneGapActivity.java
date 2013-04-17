@@ -11,7 +11,8 @@ public class PhoneGapActivity extends DroidGap {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setIntegerProperty("loadUrlTimeoutValue", 10000); 
+        
+        //super.setIntegerProperty("loadUrlTimeoutValue", 10000); 
         super.loadUrl("file:///android_asset/www/index.html");
         
         // Display vertical scrollbar and hide horizontal scrollBar
