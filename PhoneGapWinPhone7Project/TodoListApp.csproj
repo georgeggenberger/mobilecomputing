@@ -100,55 +100,25 @@
     <Content Include="CordovaSourceDictionary.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="www\apis\device.js" />
+    <Content Include="www\apis\events.js" />
+    <Resource Include="www\images\ajax-loader.gif" />
+    <Resource Include="www\images\icons-18-black.png" />
+    <Resource Include="www\images\icons-18-white.png" />
+    <Resource Include="www\images\icons-36-black.png" />
+    <Resource Include="www\images\icons-36-white.png" />
     <Content Include="www\cordova-2.5.0.js" />
     <Content Include="www\cordova-current.js" />
-    <Content Include="www\network.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\notification.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\storage.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="BuildManifestProcessor.js" />
-    <Content Include="www\accelerometer.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\accelerometer2.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\audio.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\calculator.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\camera.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\capture.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\compass.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\contacts.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\events.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\file.html">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="www\index.css" />
     <Content Include="www\index.html">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="www\location.html">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="www\master.css" />
+    <Content Include="www\jquery-1.8.2.min.js" />
+    <Content Include="www\jquery.mobile-1.3.0.min.css" />
+    <Content Include="www\jquery.mobile-1.3.0.min.js" />
+    <Content Include="www\todo.css" />
+    <Content Include="www\todolist.js" />
+    <None Include="BuildManifestProcessor.js" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
     </None>
