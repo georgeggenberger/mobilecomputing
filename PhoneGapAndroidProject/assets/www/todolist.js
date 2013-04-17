@@ -314,7 +314,7 @@ function todolistDeleteNotebook(notebook)
 	{
 		console.log("Noteboook " + notebook + " deleted!");
 		//removing the notebook from DOM
-		$("div[id='" + notebook + "']").remove();
+		$("div[data-role='collapsible-set']").find("div[id='" + notebook + "']").remove();
 		$("div[data-role='collapsible-set']").collapsibleset('refresh'); 
 	}
 	
