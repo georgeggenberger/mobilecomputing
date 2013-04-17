@@ -354,6 +354,7 @@ function todolistGetItemsForNotebook(notebook)
 //EVENT FUNCTIONS
 
 //creating of accordion content of expanded item dynamically
+//TODO this is too complex and already creates some little sideeffects
 function onSuccessSelectItems(tx, results)
 {
     console.log("Items returned=" + results.rows.length);
@@ -439,7 +440,7 @@ function onSuccessSelectItems(tx, results)
     });
     
     //Event for Deleting a List
-    $("#delete-list").click(function(e){
+    $("div[id='" + notebookName + "']").find("#delete-list").click(function(e){
     	e.stopImmediatePropagation();
         //stop default action every time
         e.preventDefault();
@@ -450,7 +451,6 @@ function onSuccessSelectItems(tx, results)
     	areYouSure(function() {
     		todolistDeleteNotebook(notebookName);
     	});
-    	
     });
 }
 
