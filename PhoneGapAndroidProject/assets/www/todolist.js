@@ -378,7 +378,11 @@ function onSuccessSelectItems(tx, results)
     		var datePrefix = idDate.toLocaleDateString();
     		if (datePrefix == new Date().toLocaleDateString()) // if note was created today
     		{
-    			datePrefix = idDate.toLocaleTimeString();
+				datePrefix = ("00" + idDate.getHours()).slice (-2) + ":" + ("00" + idDate.getMinutes()).slice (-2);
+    		}
+    		else
+    		{
+    			datePrefix = idDate.getFullYear() + "/" + ("00" + idDate.getMonth()).slice (-2) + "/" + ("00" + idDate.getDate()).slice (-2);
     		}
     		
     		//Attention: Please keep container (in this case <p>) for each item
