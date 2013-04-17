@@ -16,15 +16,15 @@
 .ui-btn-hover-c{border-width: 1px 1px 0 1px;}
 .ui-btn-inner{padding: 1.2em 20px;}
 
-.ui-btn-up-c .ui-btn-inner .ui-icon-plus,
-.ui-btn-up-c .ui-btn-inner .ui-icon-minus{ background-position: -788px -1px !important;}
+.ui-btn-up-c .ui-btn-inner .ui-icon-plus{ background-position: -788px -1px !important;}
+/* .ui-btn-up-c .ui-btn-inner .ui-icon-minus */
 
 .ui-btn-up-c .ui-btn-inner{color: #396B9E;}
 
 .ui-btn-icon-left .ui-icon{right:10px !important;}
 
-.check-icon{float: right; margin-right: 4px;}
-.todo-item{padding: 5px 7px;}
+.check-icon{position: absolute; top: 10px; right: 10px;}
+.todo-item{padding: 5px 7px; position: relative;}
 .todo-item span{font-size: 16px; color: #396B9E}
 .todo-item label{font-size: 16px;}
 .todo-item input{background: #fff; border: 1px solid #666;}
@@ -99,6 +99,15 @@ label.error {
 
 #edit-dialog-item .ui-dialog-contain{width: 100%;}
 
+
+#sure {background: #fff !important;}
+#sure .ui-corner-all{border-radius: 0; margin: 0; max-width: inherit;}
+
+#sure .ui-overlay-shadow{box-shadow: none;}
+#sure .ui-content{background: none;}
+
+#sure .ui-dialog-contain{width: 100%;}
+
 /* Content for Notebook-List */
 .ui-collapsible-content{border: 1px solid #ccc; border-width: 0 1px; background: #eee; padding: 10px 0 !important;}
 
@@ -113,3 +122,8 @@ label.error {
 .ui-mini .ui-btn-icon-right .ui-icon{right: 10px !important;}
 
 .ui-last-child{border-bottom: 1px solid #b8b7b7;}
+
+.label-text{display: block; margin-left: 28px; width: 80%;}
+.date{color: #457aff; text-decoration: underline;}
+
+

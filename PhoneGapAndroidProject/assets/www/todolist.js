@@ -387,16 +387,12 @@ function onSuccessSelectItems(tx, results)
 		     	'<p class="todo-item">' + 
 		     	'<input type="checkbox" name="checkbox" id="' + 
 		     	results.rows.item(i).id + '" ' + checked + '>' +
-		     	'<span>' + datePrefix + ' </span>' +
-		     	'<label for="checkbox">' +
+		     	'<span class="date">' + datePrefix + ' </span><br />' +
+		     	'<span class="label-text">' +
 		     	results.rows.item(i).noteText +
-		     	'</label>' + 
+		     	'</span>' + 
 		     	'<a href="#" data-role="button" data-icon="edit" data-iconpos="notext" class="check-icon" id="Item_' + results.rows.item(i).id +
 		     	'" rel="external">EDIT</a></p>';
-		     	/*
-		     	'<a href="#" id="Item_' + results.rows.item(i).id +
-		     	'" rel="external">EDIT</a></p>';
-		     	*/
 		 }
     }
     resultString += "</fieldset>";
