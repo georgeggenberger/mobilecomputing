@@ -115,12 +115,12 @@ var onDeviceReady = function() {
     }
 };
 
+document.addEventListener("deviceready", onDeviceReady, true);
+
 //init() replaced by JQM event (TODO test this on real device)
 //This section is loaded at the pages
 $(document).on('pageinit', 'div:jqmData(role="page")', function(e) { 
     console.log("entered init for pages");
-    
-    document.addEventListener("deviceready", onDeviceReady, true);
 
     document.getElementById('api-intro').style.display = 'block';
     
