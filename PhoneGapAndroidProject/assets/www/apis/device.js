@@ -128,8 +128,7 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     $("[data-role=footer]").fixedtoolbar({ tapToggle: false });
     
     //pageshow Event for the Main Page
-    $("#main").live('pageshow', function () {
-    	
+    $(document).on('pageshow', 'div#main', function(e) {
     	//remove content of dialog inputs
     	$("input#add-name").val('');
     	$("input#add-text").val('');
@@ -144,7 +143,7 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     });
     
     //pageshow Event for Adding List Dialog
-    $("#add-dialog-list").live('pageshow',function() {
+    $(document).on('pageshow', 'div#add-dialog-list', function(e) {
     	$("#add-name").focus();
     });
     
@@ -171,7 +170,7 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     });
     
     //pageshow Event for adding a TODO Dialog
-    $("#add-dialog-item").live('pageshow',function() {
+    $(document).on('pageshow', 'div#add-dialog-item', function(e) {
     	$("#add-text").focus();
     });
     
@@ -203,7 +202,7 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
     });
     
     //pageshow Event for editing a TODO Dialog
-    $("#edit-dialog-item").live('pageshow',function() {
+    $(document).on('pageshow', 'div#edit-dialog-item', function(e) {
     	$("#edit-text").focus();
     });
     
