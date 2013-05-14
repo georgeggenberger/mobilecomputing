@@ -188,7 +188,6 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
         if(text == '') {
             // No text entered (empty string)
              $("label.error").text("Please enter text for content!");
-             // TODO AL: adjust regex below (add special characters like ?, !, etc.)
         } else if (text.match(/^[a-zA-ZäöüßÄÖÜ0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
         	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
         	$("label.error").text("");
@@ -220,7 +219,6 @@ $(document).on('pageinit', 'div:jqmData(role="page")', function(e) {
         if(text == '') {
             // No text entered (empty string)
              $("label.error").text("Please enter text for content!");
-             // TODO AL: adjust regex below (add special characters like ?, !, etc.)
         } else if (text.match(/^[a-zA-ZäöüßÄÖÜ0-9\s\.\,\@\#\&\%\;\:\+\-\_\*\(\)\[\]\'\"\?\!\\\/]{5,200}$/)) {
         	// Matches alphanumeric characters (5-200), space and following special characters: .,'"-_@#&%;:+-*/()[]?!
         	$("label.error").text("");
