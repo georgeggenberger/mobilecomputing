@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <meta charset="utf8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
     <title>TODO-List App</title>
 
     <link rel="stylesheet" href="index.css" /> 
@@ -51,10 +52,10 @@
 <!-- Dialog Add List-->
 	<div data-role="dialog" id="add-dialog-list">
 	  	<div data-role="header" id="dialog-header" >
-			<h1>Add new Notebook</h1>
+			<h1>Add new TODO-List</h1>
 		</div>
 		<div data-role="content">	
-   			<p><input type="text" name="name" id="add-name" data-corners="false" value="" placeholder="Enter a Notebook Name" />
+   			<p><input type="text" name="name" id="add-name" data-corners="false" value="" placeholder="Enter List Name" />
    			<!-- error label for validation -->
    			<label class='error'></label>
    			</p>
@@ -126,7 +127,7 @@
 	<!-- FL: added remote weinre javascript debugging support: 
     After start of app in emulator open this page in your host's browser: http://debug.phonegap.com/client/#mco-debugger -->
     <!--  <script src="http://debug.phonegap.com/target/target-script-min.js#mco-debugger"></script> -->
-    <!-- <script src="http://192.168.0.13:8080/target/target-script-min.js#mco-debugger"></script>  -->
+    <script src="http://192.168.0.13:8080/target/target-script-min.js#mco-debugger"></script>  -->
 
   </body>
 </html>
